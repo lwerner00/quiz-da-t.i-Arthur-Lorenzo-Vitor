@@ -20,5 +20,21 @@ namespace QuizDaTI.Banco.Repositories
                  usuario
                  );
         }
+
+
+        internal static async Task<Usuario> ObterPorNickname(string nickUsuario)
+        {
+            return await ConexaoBanco.CriarConexao().QueryFirstOrDefaultAsync<Usuario>(
+                  @"
+                    SELECT *
+                    FROM Usuario
+                    WHERE Nickname = @Nickname
+                 ",
+                  new
+                  {
+                      Nickname = nickUsuario
+                  }
+                 );
+        }
     }
 }

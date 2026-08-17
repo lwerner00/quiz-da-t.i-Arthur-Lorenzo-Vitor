@@ -39,7 +39,8 @@
             // txtNick
             // 
             txtNick.BackColor = Color.FromArgb(76, 73, 93);
-            txtNick.Location = new Point(324, 134);
+            txtNick.ForeColor = Color.FromArgb(209, 215, 224);
+            txtNick.Location = new Point(324, 108);
             txtNick.Name = "txtNick";
             txtNick.PlaceholderText = "wernerzx00";
             txtNick.Size = new Size(234, 31);
@@ -51,7 +52,7 @@
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 11F);
             label3.ForeColor = Color.FromArgb(209, 215, 224);
-            label3.Location = new Point(200, 135);
+            label3.Location = new Point(200, 109);
             label3.Name = "label3";
             label3.Size = new Size(118, 30);
             label3.TabIndex = 5;
@@ -60,7 +61,8 @@
             // txtSenha
             // 
             txtSenha.BackColor = Color.FromArgb(76, 73, 93);
-            txtSenha.Location = new Point(324, 204);
+            txtSenha.ForeColor = Color.FromArgb(209, 215, 224);
+            txtSenha.Location = new Point(324, 194);
             txtSenha.Name = "txtSenha";
             txtSenha.PlaceholderText = "Senha123@";
             txtSenha.Size = new Size(234, 31);
@@ -71,7 +73,7 @@
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 11F);
             label5.ForeColor = Color.FromArgb(209, 215, 224);
-            label5.Location = new Point(240, 203);
+            label5.Location = new Point(240, 193);
             label5.Name = "label5";
             label5.Size = new Size(77, 30);
             label5.TabIndex = 9;
@@ -115,6 +117,7 @@
             Controls.Add(label3);
             Name = "FrmLogin";
             Text = "Login";
+            Load += FrmLogin_Load;
             ResumeLayout(false);
             PerformLayout();
         }

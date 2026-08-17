@@ -17,7 +17,12 @@ namespace QuizDaTI.Modelos
             Senha = senha;
         }
 
-        public int Id { get; set; }
+        public Usuario()
+        {
+
+        }
+
+        public int IdUsuario { get; set; }
 
         [Required(ErrorMessage = "O campo 'Nome' é obrigatório.")]
         [StringLength(255, MinimumLength = 3, ErrorMessage = "O campo 'Nome' deve ter entre 3 caracteres e 255.")]
