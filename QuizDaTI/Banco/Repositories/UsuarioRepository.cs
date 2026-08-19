@@ -35,6 +35,22 @@ namespace QuizDaTI.Banco.Repositories
                       Nickname = nickUsuario
                   }
                  );
+
+        }
+
+        internal static async Task<Usuario> ObterPorId(int IdUsuarioAtual)
+        {
+            return await ConexaoBanco.CriarConexao().QueryFirstOrDefaultAsync<Usuario>(
+                  @"
+                    SELECT *
+                    FROM Usuario
+                    WHERE Id = @IdUsuario
+                 ",
+                  new
+                  {
+                      IdUsuario = IdUsuarioAtual
+                  }
+                 );
         }
     }
 }

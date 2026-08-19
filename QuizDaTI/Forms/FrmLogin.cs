@@ -20,22 +20,24 @@ namespace QuizDaTI.Forms
         private async void btnEntrar_Click(object sender, EventArgs e)
         {
             string nickUsuario = txtNick.Text;
-
-            usuarioAtual = await UsuarioRepository.ObterPorNickname(nickUsuario);
-
             string senhaDigita = txtSenha.Text;
-            string hashDoBanco = usuarioAtual.Senha;
-
-            bool senhaValida = BCrypt.Net.BCrypt.Verify(senhaDigita, hashDoBanco);
 
             if (txtNick.Text == "admin" && txtSenha.Text == "1234")
             {
                 this.Hide();
                 new FrmAdmin().ShowDialog();
+                return;
             }
-            else if (txtNick.Text == usuarioAtual.NickName && senhaValida)
-            {
 
+            usuarioAtual = await UsuarioRepository.ObterPorNickname(nickUsuario);
+            string hashDoBanco = usuarioAtual.Senha;
+            bool senhaValida = BCrypt.Net.BCrypt.Verify(senhaDigita, hashDoBanco);
+
+            if (txtNick.Text == usuarioAtual.NickName && senhaValida)
+            {
+                this.Hide();
+                this.Close();
+                new FrmMenuPrincipal(usuarioAtual.Id).ShowDialog();
             }
             else
             {
