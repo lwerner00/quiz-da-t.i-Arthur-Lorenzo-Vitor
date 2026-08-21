@@ -67,6 +67,7 @@
             txtSenha.PlaceholderText = "Senha123@";
             txtSenha.Size = new Size(234, 31);
             txtSenha.TabIndex = 10;
+            txtSenha.UseSystemPasswordChar = true;
             // 
             // label5
             // 

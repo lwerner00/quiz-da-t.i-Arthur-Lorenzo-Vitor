@@ -20,9 +20,25 @@ namespace QuizDaTI.Banco.Repositories
                     SELECT *
                     FROM Pergunta
                     ORDER BY RANDOM()
+                    LIMIT 10
                  "
                  );
         }
+
+        public static async Task ResponderPergunta(string resposta, int id)
+        {
+            await ConexaoBanco.CriarConexao().ExecuteAsync(
+                 @"
+                    UPDATE Pergunta
+                    SET Resposta = @Resposta
+                    WHERE Id = @Id;
+                ",
+                    new 
+                    { Resposta = resposta, Id = id }
+                 );
+        }
+
+
 
     }
 }

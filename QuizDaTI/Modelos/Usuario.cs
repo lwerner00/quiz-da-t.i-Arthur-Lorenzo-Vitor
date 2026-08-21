@@ -22,6 +22,11 @@ namespace QuizDaTI.Modelos
 
         }
 
+        public Usuario(string nome, string nickName, DateTime dataDeNascimento, string senha, int pontuacao) : this(nome, nickName, dataDeNascimento, senha)
+        {
+            Pontuacao = pontuacao;
+        }
+
         public int Id { get; set; }
 
         [Required(ErrorMessage = "O campo 'Nome' é obrigatório.")]
@@ -40,6 +45,8 @@ namespace QuizDaTI.Modelos
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$",
         ErrorMessage = "A senha deve conter pelo menos 1 letra maiúscula, 1 letra minúscula, 1 número e 1 caractere especial.")]
         public string Senha { get; private set; }
+
+        public int Pontuacao { get; set; }
 
 
     }

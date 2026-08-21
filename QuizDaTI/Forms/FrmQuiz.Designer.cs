@@ -34,8 +34,8 @@
             btnAlternativa3 = new Button();
             btnAlternativa4 = new Button();
             lblNickENivel = new Label();
-            button1 = new Button();
-            label1 = new Label();
+            btnProxima = new Button();
+            lblPontosTotais = new Label();
             lblPontosENivel = new Label();
             SuspendLayout();
             // 
@@ -61,6 +61,7 @@
             btnAlternativa1.TabIndex = 1;
             btnAlternativa1.Text = "Alternativa 1";
             btnAlternativa1.UseVisualStyleBackColor = false;
+            btnAlternativa1.Click += btnAlternativa1_Click;
             // 
             // btnAlternativa2
             // 
@@ -72,6 +73,7 @@
             btnAlternativa2.TabIndex = 2;
             btnAlternativa2.Text = "Alternativa 2";
             btnAlternativa2.UseVisualStyleBackColor = false;
+            btnAlternativa2.Click += btnAlternativa2_Click;
             // 
             // btnAlternativa3
             // 
@@ -83,6 +85,7 @@
             btnAlternativa3.TabIndex = 3;
             btnAlternativa3.Text = "Alternativa 3";
             btnAlternativa3.UseVisualStyleBackColor = false;
+            btnAlternativa3.Click += btnAlternativa3_Click;
             // 
             // btnAlternativa4
             // 
@@ -94,6 +97,7 @@
             btnAlternativa4.TabIndex = 4;
             btnAlternativa4.Text = "Alternativa 4";
             btnAlternativa4.UseVisualStyleBackColor = false;
+            btnAlternativa4.Click += btnAlternativa4_Click;
             // 
             // lblNickENivel
             // 
@@ -107,28 +111,30 @@
             lblNickENivel.TabIndex = 5;
             lblNickENivel.Text = "Nick e nvl";
             // 
-            // button1
+            // btnProxima
             // 
-            button1.BackColor = Color.FromArgb(76, 73, 93);
-            button1.ForeColor = Color.FromArgb(209, 215, 224);
-            button1.Location = new Point(647, 405);
-            button1.Name = "button1";
-            button1.Size = new Size(141, 40);
-            button1.TabIndex = 6;
-            button1.Text = "Próxima";
-            button1.UseVisualStyleBackColor = false;
+            btnProxima.BackColor = Color.FromArgb(76, 73, 93);
+            btnProxima.ForeColor = Color.FromArgb(209, 215, 224);
+            btnProxima.Location = new Point(647, 405);
+            btnProxima.Name = "btnProxima";
+            btnProxima.Size = new Size(141, 40);
+            btnProxima.TabIndex = 6;
+            btnProxima.Text = "Próxima";
+            btnProxima.UseVisualStyleBackColor = false;
+            btnProxima.Click += button1_Click;
             // 
-            // label1
+            // lblPontosTotais
             // 
-            label1.AutoSize = true;
-            label1.BackColor = Color.FromArgb(76, 73, 93);
-            label1.Font = new Font("Segoe UI", 12F);
-            label1.ForeColor = Color.FromArgb(209, 215, 224);
-            label1.Location = new Point(206, 9);
-            label1.Name = "label1";
-            label1.Size = new Size(127, 32);
-            label1.TabIndex = 7;
-            label1.Text = "Pnts Totais";
+            lblPontosTotais.AutoSize = true;
+            lblPontosTotais.BackColor = Color.FromArgb(76, 73, 93);
+            lblPontosTotais.Font = new Font("Segoe UI", 12F);
+            lblPontosTotais.ForeColor = Color.FromArgb(209, 215, 224);
+            lblPontosTotais.Location = new Point(206, 9);
+            lblPontosTotais.Name = "lblPontosTotais";
+            lblPontosTotais.Size = new Size(127, 32);
+            lblPontosTotais.TabIndex = 7;
+            lblPontosTotais.Text = "Pnts Totais";
+            lblPontosTotais.Click += label1_Click;
             // 
             // lblPontosENivel
             // 
@@ -136,7 +142,7 @@
             lblPontosENivel.BackColor = Color.FromArgb(76, 73, 93);
             lblPontosENivel.Font = new Font("Segoe UI", 12F);
             lblPontosENivel.ForeColor = Color.FromArgb(209, 215, 224);
-            lblPontosENivel.Location = new Point(527, 9);
+            lblPontosENivel.Location = new Point(447, 9);
             lblPontosENivel.Name = "lblPontosENivel";
             lblPontosENivel.Size = new Size(224, 32);
             lblPontosENivel.TabIndex = 8;
@@ -149,8 +155,8 @@
             BackColor = Color.FromArgb(45, 40, 62);
             ClientSize = new Size(800, 450);
             Controls.Add(lblPontosENivel);
-            Controls.Add(label1);
-            Controls.Add(button1);
+            Controls.Add(lblPontosTotais);
+            Controls.Add(btnProxima);
             Controls.Add(lblNickENivel);
             Controls.Add(btnAlternativa4);
             Controls.Add(btnAlternativa3);
@@ -172,8 +178,8 @@
         private Button btnAlternativa3;
         private Button btnAlternativa4;
         private Label lblNickENivel;
-        private Button button1;
-        private Label label1;
+        private Button btnProxima;
+        private Label lblPontosTotais;
         private Label lblPontosENivel;
     }
 }
