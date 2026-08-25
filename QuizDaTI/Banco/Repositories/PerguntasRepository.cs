@@ -38,6 +38,22 @@ namespace QuizDaTI.Banco.Repositories
                  );
         }
 
+        public static async Task<List<Pergunta>> ObterUltimasRespondidas()
+        {
+            // Usando using para garantir que a conexão será fechada corretamente
+            using var conexao = ConexaoBanco.CriarConexao();
+
+            string sql = @"
+        SELECT * FROM Pergunta 
+        WHERE Resposta IS NOT NULL 
+        ORDER BY Id DESC 
+        LIMIT 10;
+    ";
+
+            var resultado = await conexao.QueryAsync<Pergunta>(sql);
+            return resultado.ToList();
+        }
+
 
 
     }

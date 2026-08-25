@@ -12,7 +12,7 @@ namespace QuizDaTI.Forms
         private Button botaoCorreto;
         private bool AlternativaSelecionadaValidacao = false;
         private string AlternativaSelecionada;
-        private string Resposta;
+        private int ContadorCliques = 0;
 
 
         public FrmQuiz(int IdUsuarioAtual)
@@ -70,17 +70,18 @@ namespace QuizDaTI.Forms
                         indiceErradas++;
                     }
                 }
-
-                if (AlternativaSelecionada == PerguntaAtual.AlternativaCorreta)
-                {
-                    PerguntaAtual.Resposta = "Correta";
-                    await PerguntasRepository.ResponderPergunta(PerguntaAtual.Resposta, PerguntaAtual.Id);
-                }
-                else
-                {
-                    PerguntaAtual.Resposta = "Incorreta";
-                    await PerguntasRepository.ResponderPergunta(PerguntaAtual.Resposta, PerguntaAtual.Id);
-                }
+                //if (AlternativaSelecionada?.Trim() == PerguntaAtual.AlternativaCorreta?.Trim())
+                //{
+                //    PerguntaAtual.Resposta = "Correta";
+                //    await PerguntasRepository.ResponderPergunta(PerguntaAtual.Resposta, PerguntaAtual.Id);
+                //    UsuarioAtual.Pontuacao += PerguntaAtual.Pontuacao;
+                //}
+                //else
+                //{
+                //    PerguntaAtual.Resposta = "Incorreta";
+                //    await PerguntasRepository.ResponderPergunta(PerguntaAtual.Resposta, PerguntaAtual.Id);
+                //}
+                
 
             }
             else
@@ -108,7 +109,7 @@ namespace QuizDaTI.Forms
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
             if (AlternativaSelecionadaValidacao == false)
             {
@@ -116,11 +117,38 @@ namespace QuizDaTI.Forms
                                 "Atenção",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Warning);
+                return;
+            }
+
+            bool respostaCorreta = string.Equals(
+                AlternativaSelecionada?.Trim(),
+                PerguntaAtual.AlternativaCorreta?.Trim(),
+                StringComparison.OrdinalIgnoreCase
+            );
+
+            if (respostaCorreta)
+            {
+                PerguntaAtual.Resposta = "Correta";
+                UsuarioAtual.Pontuacao += PerguntaAtual.Pontuacao;
             }
             else
             {
-                AtualizarQuiz();
+                PerguntaAtual.Resposta = "Incorreta";
             }
+            await PerguntasRepository.ResponderPergunta(PerguntaAtual.Resposta, PerguntaAtual.Id);
+            await AtualizarQuiz();
+            ContadorCliques++;
+
+            if(ContadorCliques == 9)
+            {
+                btnProxima.Text = "Finalizar";
+            }
+            else if(ContadorCliques > 9)
+            {
+                new FrmResultado(PerguntaAtual.Id).ShowDialog();
+                this.Close();
+            }
+
         }
 
         private void btnAlternativa1_Click(object sender, EventArgs e)
