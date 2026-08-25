@@ -10,18 +10,11 @@ using System.Windows.Forms;
 
 namespace QuizDaTI.Forms
 {
-    public partial class FrmAdmin : Form
+    public partial class FrmRanking : Form
     {
-        public FrmAdmin()
+        public FrmRanking()
         {
             InitializeComponent();
-        }
-
-        private void btnRanking_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            new FrmRanking().ShowDialog();
-            this.Show();
         }
     }
 }
