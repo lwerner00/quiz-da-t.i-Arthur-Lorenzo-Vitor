@@ -20,7 +20,7 @@ namespace QuizDaTI.Forms
         private void btnVerHistorico_Click(object sender, EventArgs e)
         {
             this.Hide();
-            new Histórico().ShowDialog();
+            new Histótico().ShowDialog();
             this.Show();
         }
 

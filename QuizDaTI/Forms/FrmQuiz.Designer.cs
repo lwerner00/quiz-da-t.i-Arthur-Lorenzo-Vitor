@@ -57,6 +57,7 @@
             btnAlternativa1.TabIndex = 1;
             btnAlternativa1.Text = "Alternativa 1";
             btnAlternativa1.UseVisualStyleBackColor = false;
+            btnAlternativa1.Click += btnAlternativa1_Click;
             // 
             // btnAlternativa2
             // 
