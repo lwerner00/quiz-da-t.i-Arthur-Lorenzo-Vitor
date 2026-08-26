@@ -23,5 +23,10 @@ namespace QuizDaTI.Forms
             new FrmRanking().ShowDialog();
             this.Show();
         }
+
+        private void btnCadastrarPergunta_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
