@@ -1,7 +1,11 @@
+
+
+
 ﻿using QuizDaTI.Banco.Repositories;
 using QuizDaTI.Modelos;
 
 namespace QuizDaTI.Forms
+
 {
     public partial class FrmQuiz : Form
     {
@@ -191,6 +195,48 @@ namespace QuizDaTI.Forms
             btnAlternativa2.BackColor = SystemColors.ControlDarkDark;
             AlternativaSelecionadaValidacao = true;
             AlternativaSelecionada = btnAlternativa4.Text;
+        }
+
+        private void btnAlternativa1_Click(object sender, EventArgs e)
+        {
+            
+            int pontuacaoTotal = 0;
+
+           
+            int sequenciaAcertos = 0;
+
+
+            
+            void ResponderPergunta(bool acertou, int pontosDaPergunta)
+            {
+                
+                if (!acertou)
+                {
+                    
+                    sequenciaAcertos = 0;
+                    return;
+                }
+
+               
+                decimal pontosGanhos = pontosDaPergunta;
+
+                
+                if (sequenciaAcertos == 5)
+                {
+                    pontosGanhos = pontosDaPergunta * 1.20m;
+                }
+             
+                else if (sequenciaAcertos == 3)
+                {
+                    pontosGanhos = pontosDaPergunta * 1.10m;
+                }
+
+               
+                pontuacaoTotal += (int)pontosGanhos;
+
+              
+                sequenciaAcertos++;
+            }
         }
     }
 }

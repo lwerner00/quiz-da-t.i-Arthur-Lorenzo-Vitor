@@ -28,5 +28,14 @@
     <Compile Update="Forms\FrmTelaInicial.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Histótico.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="IniciarQuiz.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="VerRanking.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

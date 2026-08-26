@@ -24,7 +24,9 @@ namespace QuizDaTI.Forms
         private void btnVerHistorico_Click(object sender, EventArgs e)
         {
             this.Hide();
-            new FrmHistorico().ShowDialog();
+
+            new Histótico().ShowDialog();
+
             this.Show();
         }
 
