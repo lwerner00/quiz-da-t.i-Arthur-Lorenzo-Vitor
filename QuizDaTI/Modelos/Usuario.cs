@@ -27,6 +27,11 @@ namespace QuizDaTI.Modelos
             Pontuacao = pontuacao;
         }
 
+        public Usuario(int pontuacaoTotal)
+        {
+            PontuacaoTotal = pontuacaoTotal;
+        }
+
         public int Id { get; set; }
 
         [Required(ErrorMessage = "O campo 'Nome' é obrigatório.")]
@@ -47,6 +52,8 @@ namespace QuizDaTI.Modelos
         public string Senha { get; private set; }
 
         public int Pontuacao { get; set; }
+
+        public int PontuacaoTotal { get; set; }
 
 
     }

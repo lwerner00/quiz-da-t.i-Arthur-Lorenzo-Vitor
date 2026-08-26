@@ -32,7 +32,7 @@ namespace QuizDaTI.Forms
             UsuarioAtual = await UsuarioRepository.ObterPorId(IdUsuario);
             //PerguntaAtual = await PerguntasRepository.ObterPerguntas();
             lblNickENivel.Text = $"{UsuarioAtual.NickName} lvl .5";
-            lblPontosTotais.Text = $"{UsuarioAtual.Pontuacao} Pontos";
+            lblPontosTotais.Text = $"{UsuarioAtual.PontuacaoTotal} Pontos";
             AtualizarQuiz();
 
         }
@@ -145,7 +145,8 @@ namespace QuizDaTI.Forms
             }
             else if(ContadorCliques > 9)
             {
-                new FrmResultado(PerguntaAtual.Id).ShowDialog();
+                new FrmResultado(UsuarioAtual.Id).ShowDialog();
+                this.Hide();
                 this.Close();
             }
 

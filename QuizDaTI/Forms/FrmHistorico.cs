@@ -16,5 +16,10 @@ namespace QuizDaTI.Forms
         {
             InitializeComponent();
         }
+
+        private void FrmHistorico_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

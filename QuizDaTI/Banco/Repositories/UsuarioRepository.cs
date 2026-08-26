@@ -52,5 +52,22 @@ namespace QuizDaTI.Banco.Repositories
                   }
                  );
         }
+
+        public static async Task AdicionarPontos(int pontos, int id)
+        {
+            using (var conexao = ConexaoBanco.CriarConexao())
+            {
+                await conexao.ExecuteAsync(
+                    @"
+                UPDATE Usuario 
+                SET PontuacaoTotal = PontuacaoTotal + @Pontos 
+                WHERE Id = @Id;
+            ",
+                    new { Pontos = pontos, Id = id }
+                );
+            }
+        }
+
+
     }
 }

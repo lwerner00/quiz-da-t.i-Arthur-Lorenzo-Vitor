@@ -40,18 +40,42 @@ namespace QuizDaTI.Banco.Repositories
 
         public static async Task<List<Pergunta>> ObterUltimasRespondidas()
         {
-            // Usando using para garantir que a conexão será fechada corretamente
             using var conexao = ConexaoBanco.CriarConexao();
 
             string sql = @"
-        SELECT * FROM Pergunta 
-        WHERE Resposta IS NOT NULL 
-        ORDER BY Id DESC 
-        LIMIT 10;
+                SELECT * FROM Pergunta
+                WHERE Resposta IS NOT NULL
+                ORDER BY Id DESC
+                LIMIT 10;
     ";
 
             var resultado = await conexao.QueryAsync<Pergunta>(sql);
             return resultado.ToList();
+        }
+
+        public static async Task LimparResposta()
+        {
+            await ConexaoBanco.CriarConexao().ExecuteAsync(
+                 @"
+                    UPDATE Pergunta
+                    SET Resposta = NULL;
+                "
+                 );
+        }
+
+        public static async Task<int> SomarPontuacao()
+        {
+            return await ConexaoBanco.CriarConexao().ExecuteScalarAsync<int>(
+                @"
+            SELECT COALESCE(SUM(Pontuacao), 0) AS TotalUltimas10
+            FROM (
+                SELECT Pontuacao
+                FROM Pergunta
+                WHERE resposta = 'Correta'
+                LIMIT 10
+            ) AS ultimas_perguntas;
+        "
+            );
         }
 
 

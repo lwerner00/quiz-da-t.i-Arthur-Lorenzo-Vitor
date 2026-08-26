@@ -28,29 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            lblNickENivel = new Label();
+            lblResultado = new Label();
             dgvResultadoQuiz = new DataGridView();
             btnRetornar = new Button();
+            lblPontosGanhos = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvResultadoQuiz).BeginInit();
             SuspendLayout();
             // 
-            // lblNickENivel
+            // lblResultado
             // 
-            lblNickENivel.AutoSize = true;
-            lblNickENivel.BackColor = Color.FromArgb(45, 40, 62);
-            lblNickENivel.Font = new Font("Segoe UI", 12F);
-            lblNickENivel.ForeColor = Color.FromArgb(209, 215, 224);
-            lblNickENivel.Location = new Point(336, 9);
-            lblNickENivel.Name = "lblNickENivel";
-            lblNickENivel.Size = new Size(118, 32);
-            lblNickENivel.TabIndex = 6;
-            lblNickENivel.Text = "Resultado";
-            lblNickENivel.Click += lblNickENivel_Click;
+            lblResultado.AutoSize = true;
+            lblResultado.BackColor = Color.FromArgb(45, 40, 62);
+            lblResultado.Font = new Font("Segoe UI", 12F);
+            lblResultado.ForeColor = Color.FromArgb(209, 215, 224);
+            lblResultado.Location = new Point(336, 9);
+            lblResultado.Name = "lblResultado";
+            lblResultado.Size = new Size(118, 32);
+            lblResultado.TabIndex = 6;
+            lblResultado.Text = "Resultado";
+            lblResultado.Click += lblNickENivel_Click;
             // 
             // dgvResultadoQuiz
             // 
             dgvResultadoQuiz.BackgroundColor = Color.FromArgb(76, 73, 93);
             dgvResultadoQuiz.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvResultadoQuiz.GridColor = Color.FromArgb(76, 73, 93);
             dgvResultadoQuiz.Location = new Point(29, 44);
             dgvResultadoQuiz.Name = "dgvResultadoQuiz";
             dgvResultadoQuiz.RowHeadersWidth = 62;
@@ -61,12 +63,24 @@
             // 
             btnRetornar.BackColor = Color.FromArgb(128, 43, 177);
             btnRetornar.ForeColor = Color.FromArgb(209, 215, 224);
-            btnRetornar.Location = new Point(322, 399);
+            btnRetornar.Location = new Point(478, 399);
             btnRetornar.Name = "btnRetornar";
             btnRetornar.Size = new Size(154, 43);
             btnRetornar.TabIndex = 8;
             btnRetornar.Text = "Retornar";
             btnRetornar.UseVisualStyleBackColor = false;
+            btnRetornar.Click += btnRetornar_Click;
+            // 
+            // lblPontosGanhos
+            // 
+            lblPontosGanhos.AutoSize = true;
+            lblPontosGanhos.BackColor = Color.FromArgb(45, 40, 62);
+            lblPontosGanhos.Font = new Font("Segoe UI", 12F);
+            lblPontosGanhos.ForeColor = Color.FromArgb(209, 215, 224);
+            lblPontosGanhos.Location = new Point(137, 402);
+            lblPontosGanhos.Name = "lblPontosGanhos";
+            lblPontosGanhos.Size = new Size(0, 32);
+            lblPontosGanhos.TabIndex = 9;
             // 
             // FrmResultado
             // 
@@ -74,11 +88,13 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(45, 40, 62);
             ClientSize = new Size(800, 450);
+            Controls.Add(lblPontosGanhos);
             Controls.Add(btnRetornar);
             Controls.Add(dgvResultadoQuiz);
-            Controls.Add(lblNickENivel);
+            Controls.Add(lblResultado);
             Name = "FrmResultado";
             Text = "Resultado do quiz";
+            Load += FrmResultado_Load;
             ((System.ComponentModel.ISupportInitialize)dgvResultadoQuiz).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -86,8 +102,9 @@
 
         #endregion
 
-        private Label lblNickENivel;
+        private Label lblResultado;
         private DataGridView dgvResultadoQuiz;
         private Button btnRetornar;
+        private Label lblPontosGanhos;
     }
 }
