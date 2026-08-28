@@ -74,8 +74,42 @@ namespace QuizDaTI.Banco.Repositories
                 WHERE resposta = 'Correta'
                 LIMIT 10
             ) AS ultimas_perguntas;
-        "
+                 "
             );
+        }
+
+        public static async Task<bool> VerificarTresAcertosSeguidos()
+        {
+            using (var conexao = ConexaoBanco.CriarConexao())
+            {
+                return await conexao.ExecuteScalarAsync<bool>(@"
+            SELECT COUNT(*) = 3
+            FROM (
+                SELECT resposta
+                FROM Pergunta
+                ORDER BY Id DESC
+                LIMIT 3
+            ) AS ultimas
+            WHERE resposta = 'correta';
+        ");
+            }
+        }
+
+        public static async Task<bool> VerificarCincoAcertosSeguidos()
+        {
+            using (var conexao = ConexaoBanco.CriarConexao())
+            {
+                return await conexao.ExecuteScalarAsync<bool>(@"
+            SELECT COUNT(*) = 5
+            FROM (
+                SELECT resposta
+                FROM Pergunta
+                ORDER BY Id DESC
+                LIMIT 5
+            ) AS ultimas
+            WHERE resposta = 'correta';
+        ");
+            }
         }
 
 

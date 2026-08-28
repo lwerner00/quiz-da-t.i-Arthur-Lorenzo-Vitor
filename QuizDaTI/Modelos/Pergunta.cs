@@ -36,7 +36,7 @@
 
         public string Nivel {  get; private set; }
 
-        public int Pontuacao { get; private set; }
+        public int Pontuacao { get; set; }
 
         public string Tema { get; private set; }
 

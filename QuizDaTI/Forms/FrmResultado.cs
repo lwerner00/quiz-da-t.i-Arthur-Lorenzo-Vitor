@@ -18,6 +18,7 @@ namespace QuizDaTI.Forms
         {
             var perguntas = await PerguntasRepository.ObterUltimasRespondidas();
             dgvResultadoQuiz.DataSource = new BindingList<Pergunta>(perguntas.ToList());
+            dgvResultadoQuiz.Columns["VerdadeiroOuFalso"].Visible = false;
         }
 
         private async Task AtualizarPontuacao()
@@ -41,6 +42,7 @@ namespace QuizDaTI.Forms
 
         private async void btnRetornar_Click(object sender, EventArgs e)
         {
+            await UsuarioRepository.RegistrarJogada(IdUsuario);
             await PerguntasRepository.LimparResposta();
             Pontos = 0;
             this.Close();

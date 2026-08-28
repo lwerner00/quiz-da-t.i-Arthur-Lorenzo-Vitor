@@ -17,6 +17,7 @@ namespace QuizDaTI.Forms
         private bool AlternativaSelecionadaValidacao = false;
         private string AlternativaSelecionada;
         private int ContadorCliques = 0;
+        private bool VerificarSePodeJogarHoje;
 
 
         public FrmQuiz(int IdUsuarioAtual)
@@ -34,6 +35,17 @@ namespace QuizDaTI.Forms
         private async void FrmQuiz_Load(object sender, EventArgs e)
         {
             UsuarioAtual = await UsuarioRepository.ObterPorId(IdUsuario);
+            VerificarSePodeJogarHoje = await UsuarioRepository.PodeJogarHoje(IdUsuario);
+
+            //if (VerificarSePodeJogarHoje == false)
+            //{
+            //    this.Close();
+            //    MessageBox.Show("Você ja fez o Quiz de hoje!",
+            //    "Quiz já realizado",
+            //    MessageBoxButtons.OK,
+            //    MessageBoxIcon.Warning);
+            //}
+
             //PerguntaAtual = await PerguntasRepository.ObterPerguntas();
             lblNickENivel.Text = $"{UsuarioAtual.NickName} lvl .5";
             lblPontosTotais.Text = $"{UsuarioAtual.PontuacaoTotal} Pontos";
@@ -41,8 +53,30 @@ namespace QuizDaTI.Forms
 
         }
 
+
+        private async Task VerificarTresAcertosSeguids()
+        {
+           bool Verficar = await PerguntasRepository.VerificarTresAcertosSeguidos();
+
+            if (Verficar)
+            {
+                PerguntaAtual.Pontuacao += (int)(PerguntaAtual.Pontuacao * 1.10);
+            }
+        }
+
+        private async Task VerificarCincoAcertosSeguidos()
+        {
+            bool Verficar = await PerguntasRepository.VerificarCincoAcertosSeguidos();
+
+            if (Verficar)
+            {
+                PerguntaAtual.Pontuacao += (int)(PerguntaAtual.Pontuacao * 1.20);
+            }
+        }
         private async Task AtualizarQuiz()
         {
+            VerificarTresAcertosSeguids();
+            VerificarCincoAcertosSeguidos();
             PerguntaAtual = await PerguntasRepository.ObterPerguntas();
             btnAlternativa1.BackColor = Color.FromArgb(128, 43, 177);
             btnAlternativa2.BackColor = Color.FromArgb(128, 43, 177);
@@ -197,46 +231,6 @@ namespace QuizDaTI.Forms
             AlternativaSelecionada = btnAlternativa4.Text;
         }
 
-        private void btnAlternativa1_Click(object sender, EventArgs e)
-        {
-            
-            int pontuacaoTotal = 0;
-
-           
-            int sequenciaAcertos = 0;
-
-
-            
-            void ResponderPergunta(bool acertou, int pontosDaPergunta)
-            {
-                
-                if (!acertou)
-                {
-                    
-                    sequenciaAcertos = 0;
-                    return;
-                }
-
-               
-                decimal pontosGanhos = pontosDaPergunta;
-
-                
-                if (sequenciaAcertos == 5)
-                {
-                    pontosGanhos = pontosDaPergunta * 1.20m;
-                }
-             
-                else if (sequenciaAcertos == 3)
-                {
-                    pontosGanhos = pontosDaPergunta * 1.10m;
-                }
-
-               
-                pontuacaoTotal += (int)pontosGanhos;
-
-              
-                sequenciaAcertos++;
-            }
-        }
+       
     }
 }

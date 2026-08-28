@@ -51,12 +51,13 @@ namespace QuizDaTI.Banco.Repositories
 
         internal static async Task<Usuario> ObterPorId(int IdUsuarioAtual)
         {
-            return await ConexaoBanco.CriarConexao().QueryFirstOrDefaultAsync<Usuario>(
+            return await conexaoBanco.CriarConexao().QueryFirstOrDefaultAsync<Usuario>(
                   @"
                     SELECT *
                     FROM Usuario
                     WHERE Id = @IdUsuario
                  ",
+
                   new
                   {
                       IdUsuario = IdUsuarioAtual
@@ -66,7 +67,7 @@ namespace QuizDaTI.Banco.Repositories
 
         public static async Task AdicionarPontos(int pontos, int id)
         {
-            using (var conexao = ConexaoBanco.CriarConexao())
+            using (var conexao = conexaoBanco.CriarConexao())
             {
                 await conexao.ExecuteAsync(
                     @"
@@ -76,6 +77,41 @@ namespace QuizDaTI.Banco.Repositories
             ",
                     new { Pontos = pontos, Id = id }
                 );
+            }
+        }
+
+
+        public static async Task<bool> PodeJogarHoje(int idUsuario)
+        {
+            using (var conexao = conexaoBanco.CriarConexao())
+            {
+                var dataUltimoQuiz = await conexao.QueryFirstOrDefaultAsync<DateTime?>(@"
+            SELECT DataUltimoQuiz
+            FROM Usuario
+            WHERE Id = @Id
+        ", new { Id = idUsuario });
+
+                if (!dataUltimoQuiz.HasValue || dataUltimoQuiz.Value.Date < DateTime.Today)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+
+        public static async Task RegistrarJogada(int idUsuario)
+        {
+            using (var conexao = conexaoBanco.CriarConexao())
+            {
+                await conexao.ExecuteAsync(@"
+            UPDATE Usuario
+            SET DataUltimoQuiz = @Agora
+            WHERE Id = @Id
+        ", 
+                new
+        {       Agora = DateTime.Now, Id = idUsuario });
             }
         }
 

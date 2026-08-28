@@ -55,6 +55,8 @@ namespace QuizDaTI.Modelos
 
         public int PontuacaoTotal { get; set; }
 
+        public DateTime UltimoQuizFeito { get; set; }
+
 
     }
 }
