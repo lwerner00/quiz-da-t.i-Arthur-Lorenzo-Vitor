@@ -5,7 +5,7 @@ namespace GerenciamentoDeFuncionarios.Banco.Configuracao
 {
     public class ConexaoBanco
     {
-        public IDbConnection CriarConexao()
+        public static IDbConnection CriarConexao()
         {
             return new NpgsqlConnection("Server=localhost;Port=5432;Database=postgres;User Id=postgres;Password=admin; Trust Server Certificate=true");
         }

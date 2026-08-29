@@ -194,16 +194,7 @@ namespace QuizDaTI.Forms
 
         }
 
-        private void btnAlternativa1_Click(object sender, EventArgs e)
-        {
-
-            btnAlternativa1.BackColor = SystemColors.HotTrack;
-            btnAlternativa2.BackColor = SystemColors.ControlDarkDark;
-            btnAlternativa3.BackColor = SystemColors.ControlDarkDark;
-            btnAlternativa4.BackColor = SystemColors.ControlDarkDark;
-            AlternativaSelecionadaValidacao = true;
-            AlternativaSelecionada = btnAlternativa1.Text;
-    }
+    
 
         private void btnAlternativa2_Click(object sender, EventArgs e)
         {
