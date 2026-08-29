@@ -1,13 +1,8 @@
-
-
-
 ﻿using QuizDaTI.Banco.Repositories;
 using QuizDaTI.Modelos;
-
 namespace QuizDaTI.Forms
-
 {
-    public partial class FrmQuiz : Form
+    public partial class FrmQuizHardcore : Form
     {
         private int IdUsuario;
         private Usuario UsuarioAtual;
@@ -20,11 +15,12 @@ namespace QuizDaTI.Forms
         private bool VerificarSePodeJogarHoje;
 
 
-        public FrmQuiz(int IdUsuarioAtual)
+        public FrmQuizHardcore(int IdUsuarioAtual)
         {
             InitializeComponent();
 
             this.IdUsuario = IdUsuarioAtual;
+            ConfigurarTimer();
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -32,7 +28,7 @@ namespace QuizDaTI.Forms
 
         }
 
-        private async void FrmQuiz_Load(object sender, EventArgs e)
+        private async void FrmQuizHardcore_Load_1(object sender, EventArgs e)
         {
             UsuarioAtual = await UsuarioRepository.ObterPorId(IdUsuario);
             VerificarSePodeJogarHoje = await UsuarioRepository.PodeJogarHoje(IdUsuario);
@@ -48,17 +44,75 @@ namespace QuizDaTI.Forms
             //    MessageBoxIcon.Warning);
             //}
 
-            //PerguntaAtual = await PerguntasRepository.ObterPerguntas();
+            PerguntaAtual = await PerguntasRepository.ObterPerguntas();
             lblNickENivel.Text = $"{UsuarioAtual.NickName} lvl .5";
             lblPontosTotais.Text = $"{UsuarioAtual.PontuacaoTotal} Pontos";
             AtualizarQuiz();
-
+            ConfigurarTimer();
         }
 
+        //private async void FrmQuizHardcore_Load(object sender, EventArgs e)
+        //{
+        //    UsuarioAtual = await UsuarioRepository.ObterPorId(IdUsuario);
+        //    VerificarSePodeJogarHoje = await UsuarioRepository.PodeJogarHoje(IdUsuario);
+        //    VerificarCincoAcertosSeguidos();
+        //    VerificarTresAcertosSeguids();
+
+        //    //if (VerificarSePodeJogarHoje == false)
+        //    //{
+        //    //    this.Close();
+        //    //    MessageBox.Show("Você ja fez o Quiz de hoje!",
+        //    //    "Quiz já realizado",
+        //    //    MessageBoxButtons.OK,
+        //    //    MessageBoxIcon.Warning);
+        //    //}
+
+        //    //PerguntaAtual = await PerguntasRepository.ObterPerguntas();
+        //    lblNickENivel.Text = $"{UsuarioAtual.NickName} lvl .5";
+        //    lblPontosTotais.Text = $"{UsuarioAtual.PontuacaoTotal} Pontos";
+        //    AtualizarQuiz();
+        //    ConfigurarTimer();
+
+        //}
+
+
+        private void ConfigurarTimer()
+        {
+            if (PerguntaAtual.Nivel == "Iniciante")
+            {
+                timerTrocaDeTela.Interval = 25000;
+                timerTrocaDeTela.Tick += new EventHandler(TimerTrocaTela_Tick);
+                timerTrocaDeTela.Start();
+            }
+            else if (PerguntaAtual.Nivel == "Fácil")
+            {
+                timerTrocaDeTela.Interval = 30000;
+                timerTrocaDeTela.Tick += new EventHandler(TimerTrocaTela_Tick);
+                timerTrocaDeTela.Start();
+            }
+            else if (PerguntaAtual.Nivel == "Intermediário")
+            {
+                timerTrocaDeTela.Interval = 40000;
+                timerTrocaDeTela.Tick += new EventHandler(TimerTrocaTela_Tick);
+                timerTrocaDeTela.Start();
+            }
+            else
+            {
+                timerTrocaDeTela.Interval = 50000;
+                timerTrocaDeTela.Tick += new EventHandler(TimerTrocaTela_Tick);
+                timerTrocaDeTela.Start();
+            }
+        }
+
+        private void TimerTrocaTela_Tick(object sender, EventArgs e)
+        {
+            timerTrocaDeTela.Stop();
+            AtualizarQuiz();
+        }
 
         private async Task VerificarTresAcertosSeguids()
         {
-           bool Verficar = await PerguntasRepository.VerificarTresAcertosSeguidos();
+            bool Verficar = await PerguntasRepository.VerificarTresAcertosSeguidos();
 
             if (Verficar)
             {
@@ -112,19 +166,6 @@ namespace QuizDaTI.Forms
                         indiceErradas++;
                     }
                 }
-                //if (AlternativaSelecionada?.Trim() == PerguntaAtual.AlternativaCorreta?.Trim())
-                //{
-                //    PerguntaAtual.Resposta = "Correta";
-                //    await PerguntasRepository.ResponderPergunta(PerguntaAtual.Resposta, PerguntaAtual.Id);
-                //    UsuarioAtual.Pontuacao += PerguntaAtual.Pontuacao;
-                //}
-                //else
-                //{
-                //    PerguntaAtual.Resposta = "Incorreta";
-                //    await PerguntasRepository.ResponderPergunta(PerguntaAtual.Resposta, PerguntaAtual.Id);
-                //}
-                
-
             }
             else
             {
@@ -181,11 +222,11 @@ namespace QuizDaTI.Forms
             await AtualizarQuiz();
             ContadorCliques++;
 
-            if(ContadorCliques == 9)
+            if (ContadorCliques == 9)
             {
                 btnProxima.Text = "Finalizar";
             }
-            else if(ContadorCliques > 9)
+            else if (ContadorCliques > 9)
             {
                 new FrmResultado(UsuarioAtual.Id).ShowDialog();
                 this.Hide();
@@ -203,7 +244,7 @@ namespace QuizDaTI.Forms
             btnAlternativa4.BackColor = SystemColors.ControlDarkDark;
             AlternativaSelecionadaValidacao = true;
             AlternativaSelecionada = btnAlternativa1.Text;
-    }
+        }
 
         private void btnAlternativa2_Click(object sender, EventArgs e)
         {
@@ -235,6 +276,6 @@ namespace QuizDaTI.Forms
             AlternativaSelecionada = btnAlternativa4.Text;
         }
 
-       
+
     }
 }

@@ -37,6 +37,7 @@
             btnProxima = new Button();
             lblPontosTotais = new Label();
             lblPontosENivel = new Label();
+            lblBonus = new Label();
             SuspendLayout();
             // 
             // lblEnunciado
@@ -44,7 +45,7 @@
             lblEnunciado.BackColor = Color.FromArgb(45, 40, 62);
             lblEnunciado.Font = new Font("Segoe UI", 11F);
             lblEnunciado.ForeColor = Color.FromArgb(209, 215, 224);
-            lblEnunciado.Location = new Point(162, 65);
+            lblEnunciado.Location = new Point(161, 46);
             lblEnunciado.Name = "lblEnunciado";
             lblEnunciado.Size = new Size(476, 100);
             lblEnunciado.TabIndex = 0;
@@ -55,9 +56,9 @@
             // 
             btnAlternativa1.BackColor = Color.FromArgb(128, 43, 177);
             btnAlternativa1.ForeColor = Color.FromArgb(209, 215, 224);
-            btnAlternativa1.Location = new Point(144, 155);
+            btnAlternativa1.Location = new Point(101, 136);
             btnAlternativa1.Name = "btnAlternativa1";
-            btnAlternativa1.Size = new Size(229, 105);
+            btnAlternativa1.Size = new Size(258, 119);
             btnAlternativa1.TabIndex = 1;
             btnAlternativa1.Text = "Alternativa 1";
             btnAlternativa1.UseVisualStyleBackColor = false;
@@ -67,9 +68,9 @@
             // 
             btnAlternativa2.BackColor = Color.FromArgb(128, 43, 177);
             btnAlternativa2.ForeColor = Color.FromArgb(209, 215, 224);
-            btnAlternativa2.Location = new Point(409, 155);
+            btnAlternativa2.Location = new Point(401, 136);
             btnAlternativa2.Name = "btnAlternativa2";
-            btnAlternativa2.Size = new Size(229, 105);
+            btnAlternativa2.Size = new Size(258, 119);
             btnAlternativa2.TabIndex = 2;
             btnAlternativa2.Text = "Alternativa 2";
             btnAlternativa2.UseVisualStyleBackColor = false;
@@ -79,9 +80,9 @@
             // 
             btnAlternativa3.BackColor = Color.FromArgb(128, 43, 177);
             btnAlternativa3.ForeColor = Color.FromArgb(209, 215, 224);
-            btnAlternativa3.Location = new Point(144, 299);
+            btnAlternativa3.Location = new Point(101, 280);
             btnAlternativa3.Name = "btnAlternativa3";
-            btnAlternativa3.Size = new Size(229, 105);
+            btnAlternativa3.Size = new Size(258, 119);
             btnAlternativa3.TabIndex = 3;
             btnAlternativa3.Text = "Alternativa 3";
             btnAlternativa3.UseVisualStyleBackColor = false;
@@ -91,9 +92,9 @@
             // 
             btnAlternativa4.BackColor = Color.FromArgb(128, 43, 177);
             btnAlternativa4.ForeColor = Color.FromArgb(209, 215, 224);
-            btnAlternativa4.Location = new Point(409, 299);
+            btnAlternativa4.Location = new Point(401, 280);
             btnAlternativa4.Name = "btnAlternativa4";
-            btnAlternativa4.Size = new Size(229, 105);
+            btnAlternativa4.Size = new Size(258, 119);
             btnAlternativa4.TabIndex = 4;
             btnAlternativa4.Text = "Alternativa 4";
             btnAlternativa4.UseVisualStyleBackColor = false;
@@ -148,12 +149,23 @@
             lblPontosENivel.TabIndex = 8;
             lblPontosENivel.Text = "Pontos Da Pergunta";
             // 
+            // lblBonus
+            // 
+            lblBonus.BackColor = Color.FromArgb(45, 40, 62);
+            lblBonus.Font = new Font("Segoe UI", 11F);
+            lblBonus.ForeColor = Color.FromArgb(209, 215, 224);
+            lblBonus.Location = new Point(12, 406);
+            lblBonus.Name = "lblBonus";
+            lblBonus.Size = new Size(339, 35);
+            lblBonus.TabIndex = 9;
+            // 
             // FrmQuiz
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(45, 40, 62);
             ClientSize = new Size(800, 450);
+            Controls.Add(lblBonus);
             Controls.Add(lblPontosENivel);
             Controls.Add(lblPontosTotais);
             Controls.Add(btnProxima);
@@ -181,5 +193,6 @@
         private Button btnProxima;
         private Label lblPontosTotais;
         private Label lblPontosENivel;
+        private Label lblBonus;
     }
 }

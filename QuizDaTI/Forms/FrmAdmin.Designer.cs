@@ -42,6 +42,7 @@
             btnCadastrarPergunta.TabIndex = 4;
             btnCadastrarPergunta.Text = "Cadastrar Pergunta";
             btnCadastrarPergunta.UseVisualStyleBackColor = false;
+            btnCadastrarPergunta.Click += btnCadastrarPergunta_Click;
             // 
             // btnRanking
             // 
