@@ -69,6 +69,11 @@ namespace QuizDaTI.Banco.Repositories
         {
             throw new NotImplementedException();
         }
+
+        internal static async Task RegistrarJogada(object idUsuario)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 
@@ -118,7 +123,7 @@ namespace QuizDaTI.Banco.Repositories
 
                 string sql = @"
         INSERT INTO Historico
-        (, DataEHora, IdPergunta, TemaPergunta, AcertoOuErro, PontosGanhos)
+        ( DataEHora, IdPergunta, TemaPergunta, AcertoOuErro, PontosGanhos)
         VALUES
         (@DataEHora, @IdPergunta, @TemaPergunta, @AcertoOuErro, @PontosGanhos);
     ";

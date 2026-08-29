@@ -1,4 +1,5 @@
-﻿namespace QuizDaTI.Forms
+﻿
+namespace QuizDaTI.Forms
 {
     partial class FrmQuiz
     {
@@ -168,6 +169,11 @@
             Load += FrmQuiz_Load;
             ResumeLayout(false);
             PerformLayout();
+        }
+
+        private void btnAlternativa1_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

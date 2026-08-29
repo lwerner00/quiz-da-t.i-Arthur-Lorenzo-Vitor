@@ -28,19 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
+            dgvHistorico = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)dgvHistorico).BeginInit();
             SuspendLayout();
+            // 
+            // dgvHistorico
+            // 
+            dgvHistorico.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvHistorico.Location = new Point(49, 40);
+            dgvHistorico.Name = "dgvHistorico";
+            dgvHistorico.RowHeadersWidth = 62;
+            dgvHistorico.Size = new Size(670, 365);
+            dgvHistorico.TabIndex = 0;
+            dgvHistorico.CellContentClick += dgvHistorico_CellContentClick;
             // 
             // FrmHistorico
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(dgvHistorico);
             Name = "FrmHistorico";
             Text = "FrmHistorico";
             Load += FrmHistorico_Load;
+            ((System.ComponentModel.ISupportInitialize)dgvHistorico).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
+
+        private DataGridView dgvHistorico;
     }
 }
