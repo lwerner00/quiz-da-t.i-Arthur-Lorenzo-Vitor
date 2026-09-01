@@ -65,7 +65,8 @@ namespace QuizDaTI.Banco.Repositories
                  );
         }
 
-        public static async Task AdicionarPontos(int idUsuario, int pontos)
+
+        internal static async Task AdicionarPontos(int pontos, int idUsuario)
         {
             using (var conexao = ConexaoBanco.CriarConexao())
             {
@@ -117,6 +118,26 @@ namespace QuizDaTI.Banco.Repositories
         ", new { Agora = DateTime.Now, Id = idUsuario });
             }
         }
+
+
+        internal static async Task<bool> AtualizarSenha(int idUsuario, string novaSenha)
+        {
+            string senhaHash = BCrypt.Net.BCrypt.HashPassword(novaSenha);
+
+            int linhas = await ConexaoBanco.CriarConexao().ExecuteAsync(
+                @"
+        UPDATE Usuario
+        SET Senha = @Senha
+        WHERE Id = @Id
+        ",
+                new
+                {
+                    Senha = senhaHash,
+                    Id = idUsuario
+                });
+
+            return linhas > 0;
+        }
     }
 
 
@@ -124,67 +145,67 @@ namespace QuizDaTI.Banco.Repositories
         public class HistoricoRepository
         {
             private readonly string conexao =
-                "Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=admin;";
-            
-            public DataTable BuscarHistorico()
+                "Server=localhost;Port=5432;Database=postgres;User Id=postgres;Password=admin; Trust Server Certificate=true";
+
+        public DataTable BuscarHistorico()
+        {
+            DataTable tabela = new DataTable();
+
+            using (NpgsqlConnection conn = new NpgsqlConnection(conexao))
             {
-                DataTable tabela = new DataTable();
-
-                using (NpgsqlConnection conn = new NpgsqlConnection(conexao))
-                {
-                    conn.Open();
-
-                    string sql = @"
-                    SELECT
-                        Id,
-                        DataEHora,
-                        IdPergunta,
-                        TemaPergunta,
-                        AcertoOuErro,
-                        PontosGanhos
-                    FROM Historico
-                    ORDER BY DataEHora DESC;
-                ";
-
-                    using (NpgsqlDataAdapter adapter =
-                           new NpgsqlDataAdapter(sql, conn))
-                    {
-                        adapter.Fill(tabela);
-                    }
-                }
-
-                return tabela;
-            }
-
-            public async Task SalvarHistorico(
-       int idPergunta,
-       string temaPergunta,
-       bool acertoOuErro,
-       int pontosGanhos)
-            {
-                using var conexao = ConexaoBanco.CriarConexao();
+                conn.Open();
 
                 string sql = @"
-        INSERT INTO Historico
-        ( DataEHora, IdPergunta, TemaPergunta, AcertoOuErro, PontosGanhos)
-        VALUES
-        (@DataEHora, @IdPergunta, @TemaPergunta, @AcertoOuErro, @PontosGanhos);
-    ";
+                SELECT
+                    Id,
+                    DataEHora,
+                    IdPergunta,
+                    TemaPergunta,
+                    AcertoOuErro,
+                    PontosGanhos
+                FROM Historico
+                ORDER BY DataEHora DESC;
+            ";
 
-                await conexao.ExecuteAsync(sql, new
+                using (NpgsqlDataAdapter adapter =
+                       new NpgsqlDataAdapter(sql, conn))
                 {
-                    DataEHora = DateTime.Now,
-                    IdPergunta = idPergunta,
-                    TemaPergunta = temaPergunta,
-                    AcertoOuErro = acertoOuErro,
-                    PontosGanhos = pontosGanhos
-                });
+                    adapter.Fill(tabela);
+                }
             }
 
+            return tabela;
+        }
+
+        public async Task SalvarHistorico(
+   int idPergunta,
+   string temaPergunta,
+   bool acertoOuErro,
+   int pontosGanhos)
+        {
+            using var conexao = ConexaoBanco.CriarConexao();
+
+            string sql = @"
+    INSERT INTO Historico
+    ( DataEHora, IdPergunta, TemaPergunta, AcertoOuErro, PontosGanhos)
+    VALUES
+    (@DataEHora, @IdPergunta, @TemaPergunta, @AcertoOuErro, @PontosGanhos);
+";
+
+            await conexao.ExecuteAsync(sql, new
+            {
+                DataEHora = DateTime.Now,
+                IdPergunta = idPergunta,
+                TemaPergunta = temaPergunta,
+                AcertoOuErro = acertoOuErro,
+                PontosGanhos = pontosGanhos
+            });
+        }
 
 
 
-        }  
-    
+
+    }
+
 
 }

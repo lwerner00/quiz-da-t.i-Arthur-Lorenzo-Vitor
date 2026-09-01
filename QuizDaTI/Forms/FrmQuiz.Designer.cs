@@ -107,7 +107,7 @@ namespace QuizDaTI.Forms
             lblNickENivel.BackColor = Color.FromArgb(76, 73, 93);
             lblNickENivel.Font = new Font("Segoe UI", 12F);
             lblNickENivel.ForeColor = Color.FromArgb(209, 215, 224);
-            lblNickENivel.Location = new Point(12, 9);
+            lblNickENivel.Location = new Point(12, 405);
             lblNickENivel.Name = "lblNickENivel";
             lblNickENivel.Size = new Size(120, 32);
             lblNickENivel.TabIndex = 5;
@@ -131,7 +131,7 @@ namespace QuizDaTI.Forms
             lblPontosTotais.BackColor = Color.FromArgb(76, 73, 93);
             lblPontosTotais.Font = new Font("Segoe UI", 12F);
             lblPontosTotais.ForeColor = Color.FromArgb(209, 215, 224);
-            lblPontosTotais.Location = new Point(206, 9);
+            lblPontosTotais.Location = new Point(317, 407);
             lblPontosTotais.Name = "lblPontosTotais";
             lblPontosTotais.Size = new Size(127, 32);
             lblPontosTotais.TabIndex = 7;
@@ -155,7 +155,7 @@ namespace QuizDaTI.Forms
             lblBonus.BackColor = Color.FromArgb(45, 40, 62);
             lblBonus.Font = new Font("Segoe UI", 11F);
             lblBonus.ForeColor = Color.FromArgb(209, 215, 224);
-            lblBonus.Location = new Point(12, 406);
+            lblBonus.Location = new Point(12, 6);
             lblBonus.Name = "lblBonus";
             lblBonus.Size = new Size(339, 35);
             lblBonus.TabIndex = 9;

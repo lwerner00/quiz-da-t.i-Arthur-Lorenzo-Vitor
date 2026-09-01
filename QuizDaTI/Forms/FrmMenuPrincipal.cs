@@ -25,7 +25,7 @@ namespace QuizDaTI.Forms
         {
             this.Hide();
 
-            new Histótico().ShowDialog();
+            new FrmHistorico().ShowDialog();
 
             this.Show();
         }
