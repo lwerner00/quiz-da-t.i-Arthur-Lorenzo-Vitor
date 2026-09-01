@@ -81,6 +81,7 @@
             Controls.Add(lblNickENivel);
             Name = "FrmResultado";
             Text = "Resultado do quiz";
+            Load += FrmResultado_Load;
             ((System.ComponentModel.ISupportInitialize)dgvResultadoQuiz).EndInit();
             ResumeLayout(false);
             PerformLayout();

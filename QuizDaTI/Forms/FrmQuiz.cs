@@ -35,7 +35,7 @@ namespace QuizDaTI.Forms
         private async void FrmQuiz_Load(object sender, EventArgs e)
         {
             UsuarioAtual = await UsuarioRepository.ObterPorId(IdUsuario);
-            VerificarSePodeJogarHoje = await UsuarioRepository.PodeJogarHoje(IdUsuario);
+            //VerificarSePodeJogarHoje = await UsuarioRepository.PodeJogarHoje(IdUsuario);
 
             //if (VerificarSePodeJogarHoje == false)
             //{
@@ -49,6 +49,22 @@ namespace QuizDaTI.Forms
             //PerguntaAtual = await PerguntasRepository.ObterPerguntas();
             lblNickENivel.Text = $"{UsuarioAtual.NickName} lvl .5";
             lblPontosTotais.Text = $"{UsuarioAtual.PontuacaoTotal} Pontos";
+            if (UsuarioAtual.PontuacaoTotal <= 500)
+            {
+                lblNickENivel.Text = $"{UsuarioAtual.NickName} - Iniciante";
+            }
+            else if (UsuarioAtual.PontuacaoTotal <= 2000)
+            {
+                lblNickENivel.Text = $"{UsuarioAtual.NickName} - Aprendiz";
+            }
+            else if (UsuarioAtual.PontuacaoTotal <= 10000)
+            {
+                lblNickENivel.Text = $"{UsuarioAtual.NickName} - Intermediário";
+            }
+            else
+            {
+                lblNickENivel.Text = $"{UsuarioAtual.NickName} - Avançado";
+            }
             AtualizarQuiz();
 
         }
@@ -174,6 +190,15 @@ namespace QuizDaTI.Forms
                 PerguntaAtual.Resposta = "Incorreta";
             }
             await PerguntasRepository.ResponderPergunta(PerguntaAtual.Resposta, PerguntaAtual.Id);
+
+            HistoricoRepository historicoRepository = new HistoricoRepository();
+
+            await historicoRepository.SalvarHistorico(PerguntaAtual.Id,
+                PerguntaAtual.Tema,
+                respostaCorreta,
+                respostaCorreta ?
+                PerguntaAtual.Pontuacao : 0);
+            
             await AtualizarQuiz();
             ContadorCliques++;
 
@@ -186,6 +211,8 @@ namespace QuizDaTI.Forms
                 new FrmResultado(UsuarioAtual.Id).ShowDialog();
                 this.Hide();
                 this.Close();
+
+
             }
 
         }

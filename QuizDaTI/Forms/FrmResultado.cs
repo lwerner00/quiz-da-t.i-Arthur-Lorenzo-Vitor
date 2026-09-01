@@ -59,7 +59,12 @@ namespace QuizDaTI.Forms
             Pontos = 0;
 
             this.Close();
-        
+
+        }
+
+        private void FrmResultado_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
