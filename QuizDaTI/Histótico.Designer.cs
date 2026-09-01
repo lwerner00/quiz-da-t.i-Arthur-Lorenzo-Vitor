@@ -50,6 +50,7 @@
             Controls.Add(dataGridView1);
             Name = "Histótico";
             Text = "Histórico";
+            Load += Histótico_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }

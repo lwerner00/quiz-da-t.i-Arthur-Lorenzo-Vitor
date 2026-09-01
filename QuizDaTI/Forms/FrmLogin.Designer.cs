@@ -34,6 +34,7 @@
             label5 = new Label();
             btnEntrar = new Button();
             label1 = new Label();
+            button1 = new Button();
             SuspendLayout();
             // 
             // txtNick
@@ -62,7 +63,7 @@
             // 
             txtSenha.BackColor = Color.FromArgb(76, 73, 93);
             txtSenha.ForeColor = Color.FromArgb(209, 215, 224);
-            txtSenha.Location = new Point(324, 194);
+            txtSenha.Location = new Point(324, 205);
             txtSenha.Name = "txtSenha";
             txtSenha.PlaceholderText = "Senha123@";
             txtSenha.Size = new Size(234, 31);
@@ -74,7 +75,7 @@
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 11F);
             label5.ForeColor = Color.FromArgb(209, 215, 224);
-            label5.Location = new Point(240, 193);
+            label5.Location = new Point(200, 204);
             label5.Name = "label5";
             label5.Size = new Size(77, 30);
             label5.TabIndex = 9;
@@ -84,7 +85,7 @@
             // 
             btnEntrar.BackColor = Color.FromArgb(128, 43, 177);
             btnEntrar.ForeColor = Color.FromArgb(209, 215, 224);
-            btnEntrar.Location = new Point(324, 287);
+            btnEntrar.Location = new Point(226, 300);
             btnEntrar.Name = "btnEntrar";
             btnEntrar.Size = new Size(147, 121);
             btnEntrar.TabIndex = 12;
@@ -104,12 +105,25 @@
             label1.TabIndex = 13;
             label1.Text = "Login";
             // 
+            // button1
+            // 
+            button1.BackColor = Color.FromArgb(128, 43, 177);
+            button1.ForeColor = Color.FromArgb(209, 215, 224);
+            button1.Location = new Point(411, 300);
+            button1.Name = "button1";
+            button1.Size = new Size(147, 121);
+            button1.TabIndex = 14;
+            button1.Text = "Mudar a Senha";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
+            // 
             // FrmLogin
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(45, 40, 62);
             ClientSize = new Size(800, 450);
+            Controls.Add(button1);
             Controls.Add(label1);
             Controls.Add(btnEntrar);
             Controls.Add(txtSenha);
@@ -131,5 +145,6 @@
         private Label label5;
         private Button btnEntrar;
         private Label label1;
+        private Button button1;
     }
 }

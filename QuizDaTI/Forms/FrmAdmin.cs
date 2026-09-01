@@ -26,11 +26,9 @@ namespace QuizDaTI.Forms
 
         private void btnCadastrarPergunta_Click(object sender, EventArgs e)
         {
-<<<<<<< HEAD
-            new CadastrarPergunta().ShowDialog();
-=======
 
->>>>>>> db45bc6e79be1c19ebed08fec67b1fdc2b1cedbf
+            new CadastrarPergunta().ShowDialog();
+
         }
     }
 }

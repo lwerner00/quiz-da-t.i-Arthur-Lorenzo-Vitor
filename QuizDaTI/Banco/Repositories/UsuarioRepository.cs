@@ -65,12 +65,36 @@ namespace QuizDaTI.Banco.Repositories
                  );
         }
 
+        internal static async Task<bool> AtualizarSenha(int idUsuario, string novaSenha)
+        {
+            string senhaHash = BCrypt.Net.BCrypt.HashPassword(novaSenha);
+
+            int linhas = await ConexaoBanco.CriarConexao().ExecuteAsync(
+                @"
+        UPDATE Usuario
+        SET Senha = @Senha
+        WHERE Id = @Id
+        ",
+                new
+                {
+                    Senha = senhaHash,
+                    Id = idUsuario
+                });
+
+            return linhas > 0;
+        }
+
         internal static async Task AdicionarPontos(int pontos, int idUsuario)
         {
             throw new NotImplementedException();
         }
 
         internal static async Task RegistrarJogada(object idUsuario)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static async Task<bool> PodeJogarHoje(int idUsuario)
         {
             throw new NotImplementedException();
         }

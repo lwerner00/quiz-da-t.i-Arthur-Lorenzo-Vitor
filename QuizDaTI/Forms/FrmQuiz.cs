@@ -35,13 +35,13 @@ namespace QuizDaTI.Forms
         private async void FrmQuiz_Load(object sender, EventArgs e)
         {
             UsuarioAtual = await UsuarioRepository.ObterPorId(IdUsuario);
-<<<<<<< HEAD
+
             //VerificarSePodeJogarHoje = await UsuarioRepository.PodeJogarHoje(IdUsuario);
-=======
+
             VerificarSePodeJogarHoje = await UsuarioRepository.PodeJogarHoje(IdUsuario);
             VerificarCincoAcertosSeguidos();
             VerificarTresAcertosSeguids();
->>>>>>> 9e35b48ebd5dccd147fc8ff45ada4b0407833e4d
+
 
             //if (VerificarSePodeJogarHoje == false)
             //{

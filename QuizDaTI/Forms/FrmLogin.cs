@@ -30,9 +30,20 @@ namespace QuizDaTI.Forms
             }
 
             usuarioAtual = await UsuarioRepository.ObterPorNickname(nickUsuario);
+
+
+            if (usuarioAtual == null)
+            {
+                MessageBox.Show("Usuario não encontrado");
+                return;
+            }
             string hashDoBanco = usuarioAtual.Senha;
+
+            
+
             bool senhaValida = BCrypt.Net.BCrypt.Verify(senhaDigita, hashDoBanco);
 
+           
             if (txtNick.Text == usuarioAtual.NickName && senhaValida)
             {
                 this.Hide();
@@ -50,6 +61,22 @@ namespace QuizDaTI.Forms
 
         private void FrmLogin_Load(object sender, EventArgs e)
         {
+
+        }
+
+        private async void button1_Click(object sender, EventArgs e)
+        {
+      
+
+            if (usuarioAtual == null)
+            {
+                MessageBox.Show("Faça o login primeiro");
+                return;
+            }
+            this.Hide();
+            new FrmMudarSenha(usuarioAtual.Id).ShowDialog();
+            this.Close();
+
 
         }
     }
