@@ -95,6 +95,7 @@ namespace QuizDaTI.Banco.Repositories
             }
         }
 
+
         public static async Task<bool> VerificarCincoAcertosSeguidos()
         {
             using (var conexao = ConexaoBanco.CriarConexao())
@@ -110,6 +111,34 @@ namespace QuizDaTI.Banco.Repositories
             WHERE resposta = 'correta';
         ");
             }
+        }
+
+
+
+        public static async Task Adicionar(Pergunta pergunta)
+        {
+
+            await ConexaoBanco.CriarConexao().QueryAsync(
+                 @"
+                    INSERT INTO Pergunta (Enunciado, Tipo, AlternativaCorreta, AlternativaIncorreta1, AlternativaIncorreta2, AlternativaIncorreta3, VerdadeiroOuFalso, Nivel, Pontuacao, Tema)
+                    VALUES (@Enunciado, @Tipo, @AlternativaCorreta, @AlternativaIncorreta1, @AlternativaIncorreta2, @AlternativaIncorreta3, @VerdadeiroOuFalso, @Nivel, @Pontuacao, @Tema)
+
+                ",
+                 new
+                 {
+                        pergunta.Enunciado,
+                        pergunta.Tipo,
+                        pergunta.AlternativaCorreta,
+                        pergunta.AlternativaIncorreta1,
+                        pergunta.AlternativaIncorreta2,
+                        pergunta.AlternativaIncorreta3,
+                        pergunta.VerdadeiroOuFalso,
+                        pergunta.Nivel,
+                        pergunta.Pontuacao,
+                        pergunta.Tema
+                 }
+
+                 );
         }
 
 

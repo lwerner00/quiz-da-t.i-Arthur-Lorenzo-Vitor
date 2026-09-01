@@ -33,6 +33,7 @@
             btnIniciarQuiz = new Button();
             btnVerRanking = new Button();
             BtnSair = new Button();
+            button1 = new Button();
             SuspendLayout();
             // 
             // label1
@@ -52,9 +53,9 @@
             btnVerHistorico.BackColor = Color.FromArgb(128, 43, 177);
             btnVerHistorico.Font = new Font("Segoe UI", 15F);
             btnVerHistorico.ForeColor = Color.FromArgb(209, 215, 224);
-            btnVerHistorico.Location = new Point(297, 259);
+            btnVerHistorico.Location = new Point(279, 241);
             btnVerHistorico.Name = "btnVerHistorico";
-            btnVerHistorico.Size = new Size(210, 44);
+            btnVerHistorico.Size = new Size(221, 44);
             btnVerHistorico.TabIndex = 1;
             btnVerHistorico.Text = "Ver histórico";
             btnVerHistorico.UseVisualStyleBackColor = false;
@@ -65,9 +66,9 @@
             btnIniciarQuiz.BackColor = Color.FromArgb(128, 43, 177);
             btnIniciarQuiz.Font = new Font("Segoe UI", 15F);
             btnIniciarQuiz.ForeColor = Color.FromArgb(209, 215, 224);
-            btnIniciarQuiz.Location = new Point(297, 134);
+            btnIniciarQuiz.Location = new Point(279, 116);
             btnIniciarQuiz.Name = "btnIniciarQuiz";
-            btnIniciarQuiz.Size = new Size(210, 45);
+            btnIniciarQuiz.Size = new Size(221, 45);
             btnIniciarQuiz.TabIndex = 2;
             btnIniciarQuiz.Text = "Iniciar o Quiz";
             btnIniciarQuiz.UseVisualStyleBackColor = false;
@@ -78,9 +79,9 @@
             btnVerRanking.BackColor = Color.FromArgb(128, 43, 177);
             btnVerRanking.Font = new Font("Segoe UI", 15F);
             btnVerRanking.ForeColor = Color.FromArgb(209, 215, 224);
-            btnVerRanking.Location = new Point(297, 197);
+            btnVerRanking.Location = new Point(279, 179);
             btnVerRanking.Name = "btnVerRanking";
-            btnVerRanking.Size = new Size(210, 42);
+            btnVerRanking.Size = new Size(221, 42);
             btnVerRanking.TabIndex = 3;
             btnVerRanking.Text = "Ver Ranking";
             btnVerRanking.UseVisualStyleBackColor = false;
@@ -91,13 +92,26 @@
             BtnSair.BackColor = Color.FromArgb(128, 43, 177);
             BtnSair.Font = new Font("Segoe UI", 15F);
             BtnSair.ForeColor = Color.FromArgb(209, 215, 224);
-            BtnSair.Location = new Point(297, 320);
+            BtnSair.Location = new Point(279, 363);
             BtnSair.Name = "BtnSair";
-            BtnSair.Size = new Size(210, 44);
+            BtnSair.Size = new Size(221, 44);
             BtnSair.TabIndex = 4;
             BtnSair.Text = "Sair";
             BtnSair.UseVisualStyleBackColor = false;
             BtnSair.Click += BtnSair_Click;
+            // 
+            // button1
+            // 
+            button1.BackColor = Color.FromArgb(128, 43, 177);
+            button1.Font = new Font("Segoe UI", 15F);
+            button1.ForeColor = Color.FromArgb(209, 215, 224);
+            button1.Location = new Point(279, 303);
+            button1.Name = "button1";
+            button1.Size = new Size(221, 44);
+            button1.TabIndex = 5;
+            button1.Text = "Quiz Hardcore";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // FrmMenuPrincipal
             // 
@@ -105,6 +119,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(45, 40, 62);
             ClientSize = new Size(800, 450);
+            Controls.Add(button1);
             Controls.Add(BtnSair);
             Controls.Add(btnVerRanking);
             Controls.Add(btnIniciarQuiz);
@@ -124,5 +139,6 @@
         private Button btnIniciarQuiz;
         private Button btnVerRanking;
         private Button BtnSair;
+        private Button button1;
     }
 }

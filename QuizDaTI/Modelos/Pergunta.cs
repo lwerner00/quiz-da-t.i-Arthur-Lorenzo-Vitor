@@ -2,6 +2,20 @@
 {
     public class Pergunta
     {
+        public Pergunta(string enunciado, string tipo, string alternativaCorreta, string alternativaIncorreta1, string alternativaIncorreta2, string alternativaIncorreta3, bool verdadeiroOuFalso, string nivel, int pontuacao, string tema)
+        {
+            Enunciado = enunciado;
+            Tipo = tipo;
+            AlternativaCorreta = alternativaCorreta;
+            AlternativaIncorreta1 = alternativaIncorreta1;
+            AlternativaIncorreta2 = alternativaIncorreta2;
+            AlternativaIncorreta3 = alternativaIncorreta3;
+            VerdadeiroOuFalso = verdadeiroOuFalso;
+            Nivel = nivel;
+            Pontuacao = pontuacao;
+            Tema = tema;
+        }
+
         public Pergunta(int id,string enunciado, string tipo, string alternativaCorreta, string alternativaIncorreta1, string alternativaIncorreta2, string alternativaIncorreta3, bool verdadeiroOuFalso, string nivel, int pontuacao, string tema, string resposta)
         {
             Id = id;

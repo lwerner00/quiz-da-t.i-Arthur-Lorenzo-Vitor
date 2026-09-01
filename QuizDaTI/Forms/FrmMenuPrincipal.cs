@@ -48,5 +48,12 @@ namespace QuizDaTI.Forms
         {
             this.Close();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new FrmQuizHardcore(IdUsuarioAtual).ShowDialog();
+            this.Show();
+        }
     }
 }
