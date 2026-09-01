@@ -65,14 +65,57 @@ namespace QuizDaTI.Banco.Repositories
                  );
         }
 
-        internal static async Task AdicionarPontos(int pontos, int idUsuario)
+        public static async Task AdicionarPontos(int idUsuario, int pontos)
         {
-            throw new NotImplementedException();
+            using (var conexao = ConexaoBanco.CriarConexao())
+            {
+                await conexao.ExecuteAsync(
+                    @"
+                UPDATE Usuario
+                SET PontuacaoTotal = COALESCE(PontuacaoTotal, 0) + @Pontos
+                WHERE Id = @IdUsuario;
+            ",
+                    new
+                    {
+                        Pontos = pontos,
+                        IdUsuario = idUsuario
+                    }
+                );
+            }
+        }
+
+
+        public static async Task<bool> PodeJogarHoje(int idUsuario)
+        {
+            using (var conexao = ConexaoBanco.CriarConexao())
+            {
+                // Busca a data em que o usuário jogou pela última vez
+                var dataUltimoQuiz = await conexao.QueryFirstOrDefaultAsync<DateTime?>(@"
+            SELECT DataUltimoQuiz
+            FROM Usuario
+            WHERE Id = @Id
+        ", new { Id = idUsuario });
+
+                // Se nunca jogou (null) OU a data for anterior a hoje, está liberado!
+                if (!dataUltimoQuiz.HasValue || dataUltimoQuiz.Value.Date < DateTime.Today)
+                {
+                    return true;
+                }
+
+                return false; // Já jogou hoje
+            }
         }
 
         internal static async Task RegistrarJogada(object idUsuario)
         {
-            throw new NotImplementedException();
+            using (var conexao = ConexaoBanco.CriarConexao())
+            {
+                await conexao.ExecuteAsync(@"
+            UPDATE Usuario
+            SET DataUltimoQuiz = @Agora
+            WHERE Id = @Id
+        ", new { Agora = DateTime.Now, Id = idUsuario });
+            }
         }
     }
 

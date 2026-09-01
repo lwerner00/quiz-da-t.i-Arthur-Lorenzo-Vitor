@@ -40,6 +40,7 @@
             btnAlternativa1 = new Button();
             lblEnunciado = new Label();
             timerTrocaDeTela = new System.Windows.Forms.Timer(components);
+            lblTempo = new Label();
             SuspendLayout();
             // 
             // lblBonus
@@ -86,6 +87,7 @@
             btnProxima.TabIndex = 16;
             btnProxima.Text = "Próxima";
             btnProxima.UseVisualStyleBackColor = false;
+            btnProxima.Click += button1_Click;
             // 
             // lblNickENivel
             // 
@@ -109,6 +111,7 @@
             btnAlternativa4.TabIndex = 14;
             btnAlternativa4.Text = "Alternativa 4";
             btnAlternativa4.UseVisualStyleBackColor = false;
+            btnAlternativa4.Click += btnAlternativa4_Click_1;
             // 
             // btnAlternativa3
             // 
@@ -120,6 +123,7 @@
             btnAlternativa3.TabIndex = 13;
             btnAlternativa3.Text = "Alternativa 3";
             btnAlternativa3.UseVisualStyleBackColor = false;
+            btnAlternativa3.Click += btnAlternativa3_Click_1;
             // 
             // btnAlternativa2
             // 
@@ -131,6 +135,7 @@
             btnAlternativa2.TabIndex = 12;
             btnAlternativa2.Text = "Alternativa 2";
             btnAlternativa2.UseVisualStyleBackColor = false;
+            btnAlternativa2.Click += btnAlternativa2_Click_1;
             // 
             // btnAlternativa1
             // 
@@ -142,6 +147,7 @@
             btnAlternativa1.TabIndex = 11;
             btnAlternativa1.Text = "Alternativa 1";
             btnAlternativa1.UseVisualStyleBackColor = false;
+            btnAlternativa1.Click += btnAlternativa1_Click_1;
             // 
             // lblEnunciado
             // 
@@ -154,12 +160,24 @@
             lblEnunciado.TabIndex = 10;
             lblEnunciado.Text = "Enunciado";
             // 
+            // lblTempo
+            // 
+            lblTempo.AutoSize = true;
+            lblTempo.BackColor = Color.FromArgb(76, 73, 93);
+            lblTempo.Font = new Font("Segoe UI", 16F);
+            lblTempo.ForeColor = Color.FromArgb(209, 215, 224);
+            lblTempo.Location = new Point(695, 71);
+            lblTempo.Name = "lblTempo";
+            lblTempo.Size = new Size(0, 45);
+            lblTempo.TabIndex = 20;
+            // 
             // FrmQuizHardcore
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(45, 40, 62);
             ClientSize = new Size(800, 450);
+            Controls.Add(lblTempo);
             Controls.Add(lblBonus);
             Controls.Add(lblPontosENivel);
             Controls.Add(lblPontosTotais);
@@ -190,5 +208,6 @@
         private Button btnAlternativa1;
         private Label lblEnunciado;
         private System.Windows.Forms.Timer timerTrocaDeTela;
+        private Label lblTempo;
     }
 }

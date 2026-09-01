@@ -13,6 +13,7 @@ namespace QuizDaTI.Forms
         private string AlternativaSelecionada;
         private int ContadorCliques = 0;
         private bool VerificarSePodeJogarHoje;
+        private int tempoRestanteSegundos;
 
 
         public FrmQuizHardcore(int IdUsuarioAtual)
@@ -20,7 +21,8 @@ namespace QuizDaTI.Forms
             InitializeComponent();
 
             this.IdUsuario = IdUsuarioAtual;
-            ConfigurarTimer();
+
+            timerTrocaDeTela.Tick += TimerTrocaTela_Tick;
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -47,67 +49,44 @@ namespace QuizDaTI.Forms
             PerguntaAtual = await PerguntasRepository.ObterPerguntas();
             lblNickENivel.Text = $"{UsuarioAtual.NickName} lvl .5";
             lblPontosTotais.Text = $"{UsuarioAtual.PontuacaoTotal} Pontos";
-            AtualizarQuiz();
-            ConfigurarTimer();
+            await AtualizarQuiz();
         }
 
-        //private async void FrmQuizHardcore_Load(object sender, EventArgs e)
-        //{
-        //    UsuarioAtual = await UsuarioRepository.ObterPorId(IdUsuario);
-        //    VerificarSePodeJogarHoje = await UsuarioRepository.PodeJogarHoje(IdUsuario);
-        //    VerificarCincoAcertosSeguidos();
-        //    VerificarTresAcertosSeguids();
-
-        //    //if (VerificarSePodeJogarHoje == false)
-        //    //{
-        //    //    this.Close();
-        //    //    MessageBox.Show("Você ja fez o Quiz de hoje!",
-        //    //    "Quiz já realizado",
-        //    //    MessageBoxButtons.OK,
-        //    //    MessageBoxIcon.Warning);
-        //    //}
-
-        //    //PerguntaAtual = await PerguntasRepository.ObterPerguntas();
-        //    lblNickENivel.Text = $"{UsuarioAtual.NickName} lvl .5";
-        //    lblPontosTotais.Text = $"{UsuarioAtual.PontuacaoTotal} Pontos";
-        //    AtualizarQuiz();
-        //    ConfigurarTimer();
-
-        //}
 
 
         private void ConfigurarTimer()
         {
-            if (PerguntaAtual.Nivel == "Iniciante")
-            {
-                timerTrocaDeTela.Interval = 25000;
-                timerTrocaDeTela.Tick += new EventHandler(TimerTrocaTela_Tick);
-                timerTrocaDeTela.Start();
-            }
-            else if (PerguntaAtual.Nivel == "Fácil")
-            {
-                timerTrocaDeTela.Interval = 30000;
-                timerTrocaDeTela.Tick += new EventHandler(TimerTrocaTela_Tick);
-                timerTrocaDeTela.Start();
-            }
-            else if (PerguntaAtual.Nivel == "Intermediário")
-            {
-                timerTrocaDeTela.Interval = 40000;
-                timerTrocaDeTela.Tick += new EventHandler(TimerTrocaTela_Tick);
-                timerTrocaDeTela.Start();
-            }
-            else
-            {
-                timerTrocaDeTela.Interval = 50000;
-                timerTrocaDeTela.Tick += new EventHandler(TimerTrocaTela_Tick);
-                timerTrocaDeTela.Start();
-            }
+            if (PerguntaAtual == null) return;
+
+            timerTrocaDeTela.Stop();
+            timerTrocaDeTela.Interval = 1000; // Define o intervalo para 1 segundo
+
+            // Define a quantidade total de segundos
+            if (PerguntaAtual.Nivel == "Iniciante") tempoRestanteSegundos = 25;
+            else if (PerguntaAtual.Nivel == "Fácil") tempoRestanteSegundos = 30;
+            else if (PerguntaAtual.Nivel == "Intermediário") tempoRestanteSegundos = 40;
+            else tempoRestanteSegundos = 50;
+
+            // Atualiza o texto inicial da Label (substitua lblTempo pelo nome correto da sua Label)
+            lblTempo.Text = tempoRestanteSegundos.ToString();
+
+            timerTrocaDeTela.Start();
         }
 
         private void TimerTrocaTela_Tick(object sender, EventArgs e)
         {
-            timerTrocaDeTela.Stop();
-            AtualizarQuiz();
+            tempoRestanteSegundos--;
+
+            // Atualiza o texto da Label na UI (substitua pelo nome da sua Label)
+            lblTempo.Text = tempoRestanteSegundos.ToString();
+
+            if (tempoRestanteSegundos <= 0)
+            {
+                timerTrocaDeTela.Stop();
+
+                // Executa a troca de pergunta assíncrona sem travar os eventos dos botões
+                _ = AtualizarQuiz();
+            }
         }
 
         private async Task VerificarTresAcertosSeguids()
@@ -133,15 +112,24 @@ namespace QuizDaTI.Forms
         }
         private async Task AtualizarQuiz()
         {
-            VerificarTresAcertosSeguids();
-            VerificarCincoAcertosSeguidos();
+            timerTrocaDeTela.Stop();
+
+            // Aguarde as verificações antes de buscar a pergunta
+            await VerificarTresAcertosSeguids();
+            await VerificarCincoAcertosSeguidos();
+
             PerguntaAtual = await PerguntasRepository.ObterPerguntas();
+
+            if (PerguntaAtual == null) return;
+
+            // Redefinição dos botões
             btnAlternativa1.BackColor = Color.FromArgb(128, 43, 177);
             btnAlternativa2.BackColor = Color.FromArgb(128, 43, 177);
             btnAlternativa3.BackColor = Color.FromArgb(128, 43, 177);
             btnAlternativa4.BackColor = Color.FromArgb(128, 43, 177);
             AlternativaSelecionadaValidacao = false;
             AlternativaSelecionada = String.Empty;
+
             if (PerguntaAtual.Tipo == "MultiplaEscolha")
             {
                 btnAlternativa3.Visible = true;
@@ -171,7 +159,6 @@ namespace QuizDaTI.Forms
             {
                 lblEnunciado.Text = PerguntaAtual.Enunciado;
                 lblPontosENivel.Text = $"Nível: {PerguntaAtual.Nivel}  {PerguntaAtual.Pontuacao} pontos";
-                string respostaCerta = PerguntaAtual.AlternativaCorreta;
 
                 btnAlternativa1.Text = "Verdadeiro";
                 btnAlternativa2.Text = "Falso";
@@ -180,6 +167,8 @@ namespace QuizDaTI.Forms
                 btnAlternativa4.Visible = false;
             }
 
+            ConfigurarTimer();
+            ContadorCliques++;
         }
 
         private void lblEnunciado_Click(object sender, EventArgs e)
@@ -194,12 +183,15 @@ namespace QuizDaTI.Forms
 
         private async void button1_Click(object sender, EventArgs e)
         {
+            timerTrocaDeTela.Stop(); // Pausa o timer imediatamente ao clicar
+
             if (AlternativaSelecionadaValidacao == false)
             {
                 MessageBox.Show("Por favor, selecione pelo menos uma alternativa antes de continuar!",
                                 "Atenção",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Warning);
+                timerTrocaDeTela.Start(); // Reativa o timer se não selecionou nada
                 return;
             }
 
@@ -218,8 +210,9 @@ namespace QuizDaTI.Forms
             {
                 PerguntaAtual.Resposta = "Incorreta";
             }
+
             await PerguntasRepository.ResponderPergunta(PerguntaAtual.Resposta, PerguntaAtual.Id);
-            await AtualizarQuiz();
+
             ContadorCliques++;
 
             if (ContadorCliques == 9)
@@ -231,13 +224,15 @@ namespace QuizDaTI.Forms
                 new FrmResultado(UsuarioAtual.Id).ShowDialog();
                 this.Hide();
                 this.Close();
+                return;
             }
 
+            await AtualizarQuiz();
         }
 
-        private void btnAlternativa1_Click(object sender, EventArgs e)
-        {
 
+        private void btnAlternativa1_Click_1(object sender, EventArgs e)
+        {
             btnAlternativa1.BackColor = SystemColors.HotTrack;
             btnAlternativa2.BackColor = SystemColors.ControlDarkDark;
             btnAlternativa3.BackColor = SystemColors.ControlDarkDark;
@@ -246,7 +241,7 @@ namespace QuizDaTI.Forms
             AlternativaSelecionada = btnAlternativa1.Text;
         }
 
-        private void btnAlternativa2_Click(object sender, EventArgs e)
+        private void btnAlternativa2_Click_1(object sender, EventArgs e)
         {
             btnAlternativa2.BackColor = SystemColors.HotTrack;
             btnAlternativa1.BackColor = SystemColors.ControlDarkDark;
@@ -256,7 +251,7 @@ namespace QuizDaTI.Forms
             AlternativaSelecionada = btnAlternativa2.Text;
         }
 
-        private void btnAlternativa3_Click(object sender, EventArgs e)
+        private void btnAlternativa3_Click_1(object sender, EventArgs e)
         {
             btnAlternativa3.BackColor = SystemColors.HotTrack;
             btnAlternativa1.BackColor = SystemColors.ControlDarkDark;
@@ -266,7 +261,7 @@ namespace QuizDaTI.Forms
             AlternativaSelecionada = btnAlternativa3.Text;
         }
 
-        private void btnAlternativa4_Click(object sender, EventArgs e)
+        private void btnAlternativa4_Click_1(object sender, EventArgs e)
         {
             btnAlternativa4.BackColor = SystemColors.HotTrack;
             btnAlternativa1.BackColor = SystemColors.ControlDarkDark;
@@ -276,6 +271,53 @@ namespace QuizDaTI.Forms
             AlternativaSelecionada = btnAlternativa4.Text;
         }
 
+        //private async Task btn_Proxima_Click(object sender, EventArgs e)
+        //{
+        //    timerTrocaDeTela.Stop(); // Pausa o timer imediatamente ao clicar
 
+        //    if (AlternativaSelecionadaValidacao == false)
+        //    {
+        //        MessageBox.Show("Por favor, selecione pelo menos uma alternativa antes de continuar!",
+        //                        "Atenção",
+        //                        MessageBoxButtons.OK,
+        //                        MessageBoxIcon.Warning);
+        //        timerTrocaDeTela.Start(); // Reativa o timer se não selecionou nada
+        //        return;
+        //    }
+
+        //    bool respostaCorreta = string.Equals(
+        //        AlternativaSelecionada?.Trim(),
+        //        PerguntaAtual.AlternativaCorreta?.Trim(),
+        //        StringComparison.OrdinalIgnoreCase
+        //    );
+
+        //    if (respostaCorreta)
+        //    {
+        //        PerguntaAtual.Resposta = "Correta";
+        //        UsuarioAtual.Pontuacao += PerguntaAtual.Pontuacao;
+        //    }
+        //    else
+        //    {
+        //        PerguntaAtual.Resposta = "Incorreta";
+        //    }
+
+        //    await PerguntasRepository.ResponderPergunta(PerguntaAtual.Resposta, PerguntaAtual.Id);
+
+        //    ContadorCliques++;
+
+        //    if (ContadorCliques == 9)
+        //    {
+        //        btnProxima.Text = "Finalizar";
+        //    }
+        //    else if (ContadorCliques > 9)
+        //    {
+        //        new FrmResultado(UsuarioAtual.Id).ShowDialog();
+        //        this.Hide();
+        //        this.Close();
+        //        return;
+        //    }
+
+        //    await AtualizarQuiz();
+        //}
     }
 }

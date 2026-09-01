@@ -7,14 +7,13 @@ namespace QuizDaTI.Forms
     public partial class FrmResultado : Form
     {
         private int idPergunta;
+        private int Pontos;
+        private int IdUsuario;
 
-        public object IdUsuario { get; private set; }
-        public int Pontos { get; private set; }
-
-        public FrmResultado(int IdPergunta)
+        public FrmResultado(int IdUsuario)
         {
             InitializeComponent();
-            idPergunta = IdPergunta;
+            this.IdUsuario = IdUsuario;
         }
 
         private async Task AtualizarTabela()
@@ -22,6 +21,20 @@ namespace QuizDaTI.Forms
             var perguntas = await PerguntasRepository.ObterUltimasRespondidas();
             dgvResultadoQuiz.DataSource = new BindingList<Pergunta>(perguntas.ToList());
         }
+
+        private async Task ExibirPontos()
+        {
+            Pontos = await PerguntasRepository.SomarPontuacao();
+            lblPontosGanhos.Text = $"Pontos Ganhos: {Pontos}";
+
+        }
+
+        private void FrmResultado_Load(object sender, EventArgs e)
+        {
+            AtualizarTabela();
+            ExibirPontos();
+        }
+
 
         private void lblNickENivel_Click(object sender, EventArgs e)
         {
@@ -54,12 +67,13 @@ namespace QuizDaTI.Forms
             }
 
             await UsuarioRepository.RegistrarJogada(IdUsuario);
+            await UsuarioRepository.AdicionarPontos(IdUsuario, Pontos);
             await PerguntasRepository.LimparResposta();
 
             Pontos = 0;
 
             this.Close();
-        
+
         }
     }
 }

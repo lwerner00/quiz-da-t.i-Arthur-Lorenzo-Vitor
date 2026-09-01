@@ -31,6 +31,7 @@
             lblNickENivel = new Label();
             dgvResultadoQuiz = new DataGridView();
             btnRetornar = new Button();
+            lblPontosGanhos = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvResultadoQuiz).BeginInit();
             SuspendLayout();
             // 
@@ -70,17 +71,31 @@
             btnRetornar.UseVisualStyleBackColor = false;
             btnRetornar.Click += btnRetornar_Click;
             // 
+            // lblPontosGanhos
+            // 
+            lblPontosGanhos.AutoSize = true;
+            lblPontosGanhos.BackColor = Color.FromArgb(45, 40, 62);
+            lblPontosGanhos.Font = new Font("Segoe UI", 12F);
+            lblPontosGanhos.ForeColor = Color.FromArgb(209, 215, 224);
+            lblPontosGanhos.Location = new Point(29, 402);
+            lblPontosGanhos.Name = "lblPontosGanhos";
+            lblPontosGanhos.Size = new Size(178, 32);
+            lblPontosGanhos.TabIndex = 9;
+            lblPontosGanhos.Text = "Pontos Ganhos:";
+            // 
             // FrmResultado
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(45, 40, 62);
             ClientSize = new Size(800, 450);
+            Controls.Add(lblPontosGanhos);
             Controls.Add(btnRetornar);
             Controls.Add(dgvResultadoQuiz);
             Controls.Add(lblNickENivel);
             Name = "FrmResultado";
             Text = "Resultado do quiz";
+            Load += FrmResultado_Load;
             ((System.ComponentModel.ISupportInitialize)dgvResultadoQuiz).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -91,5 +106,6 @@
         private Label lblNickENivel;
         private DataGridView dgvResultadoQuiz;
         private Button btnRetornar;
+        private Label lblPontosGanhos;
     }
 }

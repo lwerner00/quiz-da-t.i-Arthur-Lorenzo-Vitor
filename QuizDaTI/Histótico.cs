@@ -1,17 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using GerenciamentoDeFuncionarios.Banco.Configuracao;
-using Npgsql;
-using QuizDaTI.Banco.Repositories.QuizDaTI.Repositories;
-
-namespace QuizDaTI
+﻿namespace QuizDaTI
 {
     public partial class Histótico : Form
     {
