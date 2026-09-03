@@ -152,7 +152,6 @@ namespace QuizDaTI.Forms
             txtAlternativaIncorreta2.Name = "txtAlternativaIncorreta2";
             txtAlternativaIncorreta2.Size = new Size(234, 31);
             txtAlternativaIncorreta2.TabIndex = 23;
-            //txtAlternativaIncorreta2.TextChanged += textBox1_TextChanged;
             // 
             // label1
             // 
@@ -271,6 +270,7 @@ namespace QuizDaTI.Forms
             Controls.Add(lblResultado);
             Name = "CadastrarPergunta";
             Text = "Cadastrar Pergunta";
+            Load += CadastrarPergunta_Load;
             ResumeLayout(false);
             PerformLayout();
         }

@@ -87,5 +87,10 @@ namespace QuizDaTI.Forms
         {
 
         }
+
+        private void CadastrarPergunta_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
