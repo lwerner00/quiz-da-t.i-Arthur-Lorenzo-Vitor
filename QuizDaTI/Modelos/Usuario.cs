@@ -49,7 +49,7 @@ namespace QuizDaTI.Modelos
         [StringLength(255, MinimumLength = 6, ErrorMessage = "O campo 'Senha' deve ter mais de 6 caracteres.")]
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$",
         ErrorMessage = "A senha deve conter pelo menos 1 letra maiúscula, 1 letra minúscula, 1 número e 1 caractere especial.")]
-        public string Senha { get; private set; }
+        public string Senha { get; set; }
 
         public int Pontuacao { get; set; }
 

@@ -152,7 +152,7 @@ namespace QuizDaTI.Forms
             txtAlternativaIncorreta2.Name = "txtAlternativaIncorreta2";
             txtAlternativaIncorreta2.Size = new Size(234, 31);
             txtAlternativaIncorreta2.TabIndex = 23;
-            txtAlternativaIncorreta2.TextChanged += textBox1_TextChanged;
+            //txtAlternativaIncorreta2.TextChanged += textBox1_TextChanged;
             // 
             // label1
             // 
@@ -174,6 +174,7 @@ namespace QuizDaTI.Forms
             txtAlternativaIncorreta3.Name = "txtAlternativaIncorreta3";
             txtAlternativaIncorreta3.Size = new Size(234, 31);
             txtAlternativaIncorreta3.TabIndex = 25;
+            txtAlternativaIncorreta3.TextChanged += txtAlternativaIncorreta3_TextChanged;
             // 
             // label6
             // 
@@ -274,10 +275,7 @@ namespace QuizDaTI.Forms
             PerformLayout();
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
+
 
         #endregion
 

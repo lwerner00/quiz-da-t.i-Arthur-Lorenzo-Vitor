@@ -13,23 +13,19 @@ namespace QuizDaTI.Banco.Repositories
         private static ConexaoBanco conexaoBanco = new ConexaoBanco();
         public static async Task Adicionar(Usuario usuario)
         {
-            string senhaHash = BCrypt.Net.BCrypt.HashPassword(usuario.Senha);
-
             await ConexaoBanco.CriarConexao().QueryAsync(
-                 @"
-                    INSERT INTO Usuario (Nome, Nickname, DataDeNascimento, Senha)
-                    VALUES (@Nome, @NickName, @DataDeNascimento, @Senha)
-
-                ",
-                 new
-                 {
-                     usuario.Nome,
-                     usuario.NickName,
-                     usuario.DataDeNascimento,
-                     Senha = senhaHash
-                 }
-                
-                 );
+                @"
+            INSERT INTO Usuario (Nome, Nickname, DataDeNascimento, Senha)
+            VALUES (@Nome, @NickName, @DataDeNascimento, @Senha)
+         ",
+                new
+                {
+                    usuario.Nome,
+                    usuario.NickName,
+                    usuario.DataDeNascimento,
+                    usuario.Senha // Passa a senha (que já é o hash) diretamente
+                }
+            );
         }
 
 

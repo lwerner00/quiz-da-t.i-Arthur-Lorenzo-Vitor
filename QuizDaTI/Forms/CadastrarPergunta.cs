@@ -1,4 +1,5 @@
-﻿using QuizDaTI.Modelos;
+﻿using QuizDaTI.Banco.Repositories;
+using QuizDaTI.Modelos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,7 +24,7 @@ namespace QuizDaTI.Forms
 
         }
 
-        private void btnEntrar_Click(object sender, EventArgs e)
+        private async void btnEntrar_Click(object sender, EventArgs e)
         {
             string Enunciado = txtEnunciado.Text;
             string Tipo = cbTipo.Text;
@@ -72,6 +73,18 @@ namespace QuizDaTI.Forms
                 Nivel,
                 Pontuacao,
                 Tema);
+
+            await PerguntasRepository.Adicionar(pergunta);
+            MessageBox.Show("Pergunta adicionada com sucesso!",
+ "Sucesso",
+ MessageBoxButtons.OK,
+ MessageBoxIcon.Exclamation);
+            this.Close();
+
+        }
+
+        private void txtAlternativaIncorreta3_TextChanged(object sender, EventArgs e)
+        {
 
         }
     }
