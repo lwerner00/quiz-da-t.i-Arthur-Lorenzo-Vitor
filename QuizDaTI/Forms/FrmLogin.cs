@@ -5,79 +5,95 @@ namespace QuizDaTI.Forms
 {
     public partial class FrmLogin : Form
     {
-
         private Usuario usuarioAtual;
+
         public FrmLogin()
         {
             InitializeComponent();
         }
 
-        private void txtNick_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private async void btnEntrar_Click(object sender, EventArgs e)
         {
-            string nickUsuario = txtNick.Text;
-            string senhaDigita = txtSenha.Text;
+            string nickUsuario = txtNick.Text.Trim();
+            string senhaDigitada = txtSenha.Text;
 
-            if (txtNick.Text == "admin" && txtSenha.Text == "1234")
+            // Validação de campos vazios
+            if (string.IsNullOrWhiteSpace(nickUsuario) || string.IsNullOrWhiteSpace(senhaDigitada))
             {
-                this.Hide();
-                new FrmAdmin().ShowDialog();
+                MessageBox.Show("Preencha todos os campos.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            usuarioAtual = await UsuarioRepository.ObterPorNickname(nickUsuario);
+            // Login Administrador
+            if (nickUsuario == "admin" && senhaDigitada == "1234")
+            {
+                this.Hide();
+                using (var frmAdmin = new FrmAdmin())
+                {
+                    frmAdmin.ShowDialog();
+                }
+                this.Show(); // Reexibe o login após fechar a tela de admin
+                return;
+            }
 
+            // Busca no banco de dados
+            usuarioAtual = await UsuarioRepository.ObterPorNickname(nickUsuario);
 
             if (usuarioAtual == null)
             {
-                MessageBox.Show("Usuario não encontrado");
+                MessageBox.Show("Usuário ou senha incorretos.", "Erro ao fazer login", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            string hashDoBanco = usuarioAtual.Senha;
 
-            
+            // Tratamento do hash retornado do banco
+            string hashDoBanco = usuarioAtual.Senha?
+                .Replace("\r", "")
+                .Replace("\n", "")
+                .Trim() ?? "";
 
-            bool senhaValida = BCrypt.Net.BCrypt.Verify(senhaDigita, hashDoBanco);
+            // Validação do hash de senha com BCrypt
+            bool senhaValida = BCrypt.Net.BCrypt.Verify(senhaDigitada, hashDoBanco);
 
-           
-            if (txtNick.Text == usuarioAtual.NickName && senhaValida)
+            if (senhaValida)
             {
                 this.Hide();
-                this.Close();
-                new FrmMenuPrincipal(usuarioAtual.Id).ShowDialog();
+                using (var frmMenu = new FrmMenuPrincipal(usuarioAtual.Id))
+                {
+                    frmMenu.ShowDialog();
+                }
+                this.Close(); // Encerra o formulário de login ao fechar o menu principal
             }
             else
             {
-                MessageBox.Show("NickName ou senha incorretas.",
-                 "Erro ao fazer login",
-                 MessageBoxButtons.OK,
-                 MessageBoxIcon.Error);
+                MessageBox.Show("Usuário ou senha incorretos.", "Erro ao fazer login", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void FrmLogin_Load(object sender, EventArgs e)
-        {
-
         }
 
         private async void button1_Click(object sender, EventArgs e)
         {
-      
+            // Para trocar a senha sem estar logado, buscamos o usuário pelo texto informado no campo Nick
+            string nickUsuario = txtNick.Text.Trim();
 
-            if (usuarioAtual == null)
+            if (string.IsNullOrWhiteSpace(nickUsuario))
             {
-                MessageBox.Show("Faça o login primeiro");
+                MessageBox.Show("Digite seu NickName para alterar a senha.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+
+            var usuario = await UsuarioRepository.ObterPorNickname(nickUsuario);
+
+            if (usuario == null)
+            {
+                MessageBox.Show("Usuário não encontrado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             this.Hide();
-            new FrmMudarSenha(usuarioAtual.Id).ShowDialog();
-            this.Close();
-
-
+            using (var frmMudarSenha = new FrmMudarSenha(usuario.Id))
+            {
+                frmMudarSenha.ShowDialog();
+            }
+            this.Show(); // Reexibe a tela de login para que o usuário possa logar com a nova senha
         }
     }
 }

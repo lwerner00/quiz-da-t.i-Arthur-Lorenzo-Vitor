@@ -46,7 +46,7 @@
             txtNick.PlaceholderText = "wernerzx00";
             txtNick.Size = new Size(234, 31);
             txtNick.TabIndex = 6;
-            txtNick.TextChanged += txtNick_TextChanged;
+            //txtNick.TextChanged += txtNick_TextChanged;
             // 
             // label3
             // 
@@ -132,7 +132,7 @@
             Controls.Add(label3);
             Name = "FrmLogin";
             Text = "Login";
-            Load += FrmLogin_Load;
+            //Load += FrmLogin_Load;
             ResumeLayout(false);
             PerformLayout();
         }
