@@ -85,8 +85,169 @@ namespace QuizDaTI.Banco.Repositories
             }
         }
 
+        internal static async Task<int> PontosDoJogador(int idUsuarioAtual)
+        {
+            return await ConexaoBanco.CriarConexao().ExecuteScalarAsync<int>(
+                @"
+        SELECT COALESCE(SUM(PontosGanhos), 0)
+        FROM Historico
+        WHERE IdUsuario = @IdUsuario
+        ",
+                new
+                {
+                    IdUsuario = idUsuarioAtual
+                });
 
-        public static async Task<bool> PodeJogarHoje(int idUsuario)
+        }
+
+
+        internal static async Task<List<RankingUsuario>> ObterRanking()
+        {
+            var ranking = (await ConexaoBanco.CriarConexao().QueryAsync<RankingUsuario>(
+                @"
+        SELECT
+            u.Id AS IdUsuario,
+            u.Nome,
+
+            COALESCE(SUM(h.PontosGanhos), 0) AS PontosTotais,
+
+            COUNT(
+                CASE
+                    WHEN h.RespostaCorreta = true
+                    THEN 1
+                END
+            ) AS Acertos,
+
+            COUNT(h.Id) AS PerguntasRespondidas,
+
+            COALESCE(
+                (
+                    SELECT h2.TemaPergunta
+                    FROM Historico h2
+                    WHERE h2.IdUsuario = u.Id
+                      AND h2.RespostaCorreta = true
+                    GROUP BY h2.TemaPergunta
+                    ORDER BY COUNT(*) DESC
+                    LIMIT 1
+                ),
+                'Nenhum'
+            ) AS Tema
+
+        FROM Usuario u
+
+        LEFT JOIN Historico h
+            ON h.IdUsuario = u.Id
+
+        GROUP BY u.Id, u.Nome
+
+        ORDER BY PontosTotais DESC
+        "
+            )).ToList();
+
+            foreach (var jogador in ranking)
+            {
+                jogador.AcertosConsecutivos =
+                    await ObterMaiorSequenciaDeAcertos(jogador.IdUsuario);
+            }
+
+            return ranking;
+
+
+
+
+
+
+
+        }
+
+
+
+        private static async Task<int> ObterMaiorSequenciaDeAcertos(int idUsuario)
+        {
+            var respostas = await ConexaoBanco.CriarConexao().QueryAsync<bool>(
+                @"
+        SELECT RespostaCorreta
+        FROM Historico
+        WHERE IdUsuario = @IdUsuario
+        ORDER BY DataEHora ASC
+        ",
+                new { IdUsuario = idUsuario }
+            );
+
+            int sequenciaAtual = 0;
+            int maiorSequencia = 0;
+
+            foreach (bool respostaCorreta in respostas)
+            {
+                if (respostaCorreta)
+                {
+                    sequenciaAtual++;
+
+                    if (sequenciaAtual > maiorSequencia)
+                    {
+                        maiorSequencia = sequenciaAtual;
+                    }
+                }
+                else
+                {
+                    sequenciaAtual = 0;
+                }
+            }
+
+            return maiorSequencia;
+        }
+
+        internal static async Task<int> PerguntasRespondidas(int idUsuario)
+        {
+            return await ConexaoBanco.CriarConexao().ExecuteScalarAsync<int>(
+                @"
+        SELECT COUNT(*)
+        FROM Historico
+        WHERE IdUsuario = @IdUsuario
+        ",
+                new
+                {
+                    IdUsuario = idUsuario
+                });
+        }
+
+        internal static async Task<int> AcertosDoJogador(int id)
+        {
+            return await ConexaoBanco.CriarConexao().ExecuteScalarAsync<int>(
+        @"
+        SELECT COUNT(*)
+        FROM Historico
+        WHERE IdUsuario = @IdUsuario
+          AND RespostaCorreta = true
+        ",
+        new
+        {
+            IdUsuario = id
+        });
+        }
+
+        internal static async Task<EspecialidadeUsuario> ObterEspecialidade(int idUsuario)
+        {
+            return await ConexaoBanco.CriarConexao().QueryFirstOrDefaultAsync<EspecialidadeUsuario>(
+                @"
+        SELECT
+            TemaPergunta AS Tema,
+            COUNT(*) AS Acertos
+        FROM Historico
+        WHERE IdUsuario = @IdUsuario
+          AND RespostaCorreta = true
+        GROUP BY TemaPergunta
+        ORDER BY COUNT(*) DESC
+        LIMIT 1
+        ",
+                new
+                {
+                    IdUsuario = idUsuario
+                });
+        }
+    
+
+    public static async Task<bool> PodeJogarHoje(int idUsuario)
         {
             using (var conexao = ConexaoBanco.CriarConexao())
             {

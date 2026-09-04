@@ -20,7 +20,7 @@ namespace QuizDaTI.Forms
         private void btnRanking_Click(object sender, EventArgs e)
         {
             this.Hide();
-            new FrmRanking().ShowDialog();
+            new FrmTelaRanking().ShowDialog();
             this.Show();
         }
 

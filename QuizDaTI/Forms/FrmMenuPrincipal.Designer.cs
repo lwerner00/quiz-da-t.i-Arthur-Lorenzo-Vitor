@@ -34,6 +34,7 @@
             btnVerRanking = new Button();
             BtnSair = new Button();
             button1 = new Button();
+            btnPerfil = new Button();
             SuspendLayout();
             // 
             // label1
@@ -53,7 +54,7 @@
             btnVerHistorico.BackColor = Color.FromArgb(128, 43, 177);
             btnVerHistorico.Font = new Font("Segoe UI", 15F);
             btnVerHistorico.ForeColor = Color.FromArgb(209, 215, 224);
-            btnVerHistorico.Location = new Point(279, 241);
+            btnVerHistorico.Location = new Point(279, 262);
             btnVerHistorico.Name = "btnVerHistorico";
             btnVerHistorico.Size = new Size(221, 44);
             btnVerHistorico.TabIndex = 1;
@@ -66,7 +67,7 @@
             btnIniciarQuiz.BackColor = Color.FromArgb(128, 43, 177);
             btnIniciarQuiz.Font = new Font("Segoe UI", 15F);
             btnIniciarQuiz.ForeColor = Color.FromArgb(209, 215, 224);
-            btnIniciarQuiz.Location = new Point(279, 116);
+            btnIniciarQuiz.Location = new Point(279, 98);
             btnIniciarQuiz.Name = "btnIniciarQuiz";
             btnIniciarQuiz.Size = new Size(221, 45);
             btnIniciarQuiz.TabIndex = 2;
@@ -79,7 +80,7 @@
             btnVerRanking.BackColor = Color.FromArgb(128, 43, 177);
             btnVerRanking.Font = new Font("Segoe UI", 15F);
             btnVerRanking.ForeColor = Color.FromArgb(209, 215, 224);
-            btnVerRanking.Location = new Point(279, 179);
+            btnVerRanking.Location = new Point(279, 206);
             btnVerRanking.Name = "btnVerRanking";
             btnVerRanking.Size = new Size(221, 42);
             btnVerRanking.TabIndex = 3;
@@ -92,7 +93,7 @@
             BtnSair.BackColor = Color.FromArgb(128, 43, 177);
             BtnSair.Font = new Font("Segoe UI", 15F);
             BtnSair.ForeColor = Color.FromArgb(209, 215, 224);
-            BtnSair.Location = new Point(279, 363);
+            BtnSair.Location = new Point(279, 375);
             BtnSair.Name = "BtnSair";
             BtnSair.Size = new Size(221, 44);
             BtnSair.TabIndex = 4;
@@ -105,7 +106,7 @@
             button1.BackColor = Color.FromArgb(128, 43, 177);
             button1.Font = new Font("Segoe UI", 15F);
             button1.ForeColor = Color.FromArgb(209, 215, 224);
-            button1.Location = new Point(279, 303);
+            button1.Location = new Point(279, 319);
             button1.Name = "button1";
             button1.Size = new Size(221, 44);
             button1.TabIndex = 5;
@@ -113,12 +114,26 @@
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
+            // btnPerfil
+            // 
+            btnPerfil.BackColor = Color.FromArgb(128, 43, 177);
+            btnPerfil.Font = new Font("Segoe UI", 15F);
+            btnPerfil.ForeColor = Color.FromArgb(209, 215, 224);
+            btnPerfil.Location = new Point(279, 152);
+            btnPerfil.Name = "btnPerfil";
+            btnPerfil.Size = new Size(221, 44);
+            btnPerfil.TabIndex = 6;
+            btnPerfil.Text = "Perfil";
+            btnPerfil.UseVisualStyleBackColor = false;
+            btnPerfil.Click += btnPerfil_Click_1;
+            // 
             // FrmMenuPrincipal
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(45, 40, 62);
             ClientSize = new Size(800, 450);
+            Controls.Add(btnPerfil);
             Controls.Add(button1);
             Controls.Add(BtnSair);
             Controls.Add(btnVerRanking);
@@ -140,5 +155,6 @@
         private Button btnVerRanking;
         private Button BtnSair;
         private Button button1;
+        private Button btnPerfil;
     }
 }

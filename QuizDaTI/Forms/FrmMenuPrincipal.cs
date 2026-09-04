@@ -1,3 +1,6 @@
+using QuizDaTI.Banco.Repositories;
+using QuizDaTI.Modelos;
+
 namespace QuizDaTI.Forms
 {
     public partial class FrmMenuPrincipal : Form
@@ -9,7 +12,15 @@ namespace QuizDaTI.Forms
             InitializeComponent();
 
             this.IdUsuarioAtual = IdUsuario;
+
+            Load += FrmMenuPrincipal_Load;
         }
+
+        private void FrmMenuPrincipal_Load(object? sender, EventArgs e)
+        {
+
+        }
+
 
         private void label1_Click(object sender, EventArgs e)
         {
@@ -40,7 +51,7 @@ namespace QuizDaTI.Forms
         private void btnVerRanking_Click(object sender, EventArgs e)
         {
             this.Hide();
-            new FrmRanking().ShowDialog();
+            new FrmTelaRanking().ShowDialog();
             this.Show();
         }
 
@@ -53,6 +64,28 @@ namespace QuizDaTI.Forms
         {
             this.Hide();
             new FrmQuizHardcore(IdUsuarioAtual).ShowDialog();
+            this.Show();
+        }
+
+        private async void btnPerfil_Click(object sender, EventArgs e)
+        {
+            Usuario usuario = await UsuarioRepository.ObterPorId(IdUsuarioAtual);
+
+            this.Hide();
+
+            new FrmTelaPerfilUsuario(usuario).ShowDialog();
+
+            this.Show();
+        }
+
+        private async void btnPerfil_Click_1(object sender, EventArgs e)
+        {
+            Usuario usuario = await UsuarioRepository.ObterPorId(IdUsuarioAtual);
+
+            this.Hide();
+
+            new FrmTelaPerfilUsuario(usuario).ShowDialog();
+
             this.Show();
         }
     }
